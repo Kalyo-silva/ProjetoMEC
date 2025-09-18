@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mantenedores', function (Blueprint $table) {
+        Schema::create('mantenedor', function (Blueprint $table) {
             $table->id();
             $table->string('nome', 200);
             $table->string('UF', 2)->nullable();
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mantenedores');
+        Schema::dropIfExists('mantenedor');
     }
 };

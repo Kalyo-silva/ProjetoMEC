@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class mantenedor extends Model
 {    
-    protected $table = 'mantenedores';
+    protected $table = 'mantenedor';
 
     const CREATED_AT = 'data_criacao';
     const UPDATED_AT = 'data_alteracao';

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('instituicoes', function (Blueprint $table) {
+        Schema::create('instituicao', function (Blueprint $table) {
             $table->id();
             $table->string('nome', 200);
             $table->string('UF', 2)->nullable();
@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('Bairro', 200)->nullable();
             $table->string('Logradouro', 200)->nullable();
             $table->string('CEP', 8)->nullable();
-            $table->foreignId('id_mantenedor')->references('id')->on('mantenedores');
+            $table->foreignId('id_mantenedor')->references('id')->on('mantenedor');
             $table->string('sigla', 50)->nullable();
             $table->text('logo')->nullable();
             $table->timestamp('data_criacao');
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('instituicoes');
+        Schema::dropIfExists('instituicao');
     }
 };

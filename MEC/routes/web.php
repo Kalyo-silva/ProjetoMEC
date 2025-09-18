@@ -27,7 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('mantenedores', MantenedorController::class);
+Route::resource('mantenedores', MantenedorController::class)->middleware(['auth', 'verified']);
 Route::resource('instituicoes', InstituicaoController::class);
 Route::resource('professores', ProfessorController::class);
 Route::resource('cursos', CursoController::class);

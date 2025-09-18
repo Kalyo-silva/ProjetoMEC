@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('avaind_evidencias', function (Blueprint $table) {
+        Schema::create('avaind_evidencia', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_avaliacao_indicador')->references('id')->on('avaliacao_indicadores');
-            $table->foreignId('id_evidencia')->references('id')->on('evidencias');
+            $table->foreignId('id_avaliacao_indicador')->references('id')->on('avaliacao_indicador');
+            $table->foreignId('id_evidencia')->references('id')->on('evidencia');
             $table->timestamp('data_criacao');
             $table->timestamp('data_alteracao');
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('avaind_evidencias');
+        Schema::dropIfExists('avaind_evidencia');
     }
 };

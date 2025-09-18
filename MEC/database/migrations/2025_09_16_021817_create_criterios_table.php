@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('criterios', function (Blueprint $table) {
+        Schema::create('criterio', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_indicador')->references('id')->on('indicadores');
+            $table->foreignId('id_indicador')->references('id')->on('indicador');
             $table->integer('sequencia');
             $table->text('descricao');
             $table->timestamp('data_criacao');
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('criterios');
+        Schema::dropIfExists('criterio');
     }
 };

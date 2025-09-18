@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('indicadores', function (Blueprint $table) {
+        Schema::create('indicador', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_dimensao')->references('id')->on('dimensoes');
+            $table->foreignId('id_dimensao')->references('id')->on('dimensao');
             $table->integer('sequencia');
             $table->text('descricao');
             $table->timestamp('data_criacao');
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('indicadores');
+        Schema::dropIfExists('indicador');
     }
 };

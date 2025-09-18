@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class instrumento extends Model
 {
-    protected $table = 'instrumentos';
+    protected $table = 'instrumento';
 
     const CREATED_AT = 'data_criacao';
     const UPDATED_AT = 'data_alteracao';

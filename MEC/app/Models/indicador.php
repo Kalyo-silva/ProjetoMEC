@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class indicador extends Model
 {
-    protected $table = 'indicadores';
+    protected $table = 'indicador';
 
     const CREATED_AT = 'data_criacao';
     const UPDATED_AT = 'data_alteracao';

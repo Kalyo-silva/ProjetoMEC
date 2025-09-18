@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('avaliacao_indicadores', function (Blueprint $table) {
+        Schema::create('avaliacao_indicador', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_avaliacao')->references('id')->on('avaliacoes');
-            $table->foreignId('id_indicador')->references('id')->on('indicadores');
+            $table->foreignId('id_avaliacao')->references('id')->on('avaliacao');
+            $table->foreignId('id_indicador')->references('id')->on('indicador');
             $table->timestamp('data_criacao');
             $table->timestamp('data_alteracao');
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('avaliacao_indicadores');
+        Schema::dropIfExists('avaliacao_indicador');
     }
 };
