@@ -1,3 +1,48 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.labeledInput{
+    display: flex;
+    flex-direction: column;
+}
+
+.labeledInput input{
+    border-radius: 0.25rem;
+}
+
+a {
+    cursor: pointer;
+}
+
+.linkButton{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: solid 1px;
+    padding: 0.5rem;
+    color: gray;
+    border-color: gray;
+    border-radius: 0.25rem;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.linkButton svg{
+    margin-right: 0.25rem;
+}
+
+.linkButton:hover{
+    border-color: rgb(129 140 248);
+    color: rgb(129 140 248);
+}
+
+.linkButton:active{
+    border-color: rgb(67 56 202);
+    color: rgb(67 56 202);
+}
+
+.linkButton:focus{
+    border-color: rgb(67 56 202);
+    color: rgb(67 56 202);
+}

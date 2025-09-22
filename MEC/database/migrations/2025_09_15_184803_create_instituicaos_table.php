@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('instituicao', function (Blueprint $table) {
             $table->id();
             $table->string('nome', 200);
-            $table->string('UF', 2)->nullable();
-            $table->string('Cidade', 200)->nullable();
-            $table->string('Bairro', 200)->nullable();
-            $table->string('Logradouro', 200)->nullable();
-            $table->string('CEP', 8)->nullable();
+            $table->string('uf', 2)->nullable();
+            $table->string('cidade', 200)->nullable();
+            $table->string('bairro', 200)->nullable();
+            $table->string('logradouro', 200)->nullable();
+            $table->string('cep', 8)->nullable();
             $table->foreignId('id_mantenedor')->references('id')->on('mantenedor');
             $table->string('sigla', 50)->nullable();
             $table->text('logo')->nullable();
