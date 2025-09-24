@@ -4,26 +4,37 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\mantenedor;
+use Illuminate\Support\Facades\Validator;
 
 class MantenedorController extends Controller
 {
     public function index(){
         $listaMantenedores = mantenedor::orderBy('nome', 'asc')->paginate(10);
-        
         return view('mantenedor.index', compact('listaMantenedores'));
     }
 
-    public function show(){
-
-    }
-
     public function create(){
-        $mode = 'create';
-
+        $mode = 'create'; 
         return view('mantenedor.create', compact('mode'));
     }
 
     public function store(Request $request){
+        $validator = Validator::make($request->all(), [
+            'nome' => 'required|string|max:255',
+            'uf' => 'nullable|string|max:2',
+            'cidade' => 'nullable|string|max:200',
+            'bairro' => 'nullable|string|max:200',
+            'logradouro' => 'nullable|string|max:200',
+            'cep' => 'nullable|string|max:8'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->with('error', 'Dados inválidos, Tente novamente.');
+        }
+
         $mantenedor = new mantenedor();
 
         $mantenedor->nome = $request->input('nome');
@@ -40,13 +51,14 @@ class MantenedorController extends Controller
         return redirect()->route('mantenedores.index')->with('error', 'Erro ao cadastrar o Mantenedor');;
     }
 
-    public function edit(){
+    public function edit(int $id){
+        $mantenedor = mantenedor::findOrFail($id);
         $mode = 'edit';
 
-        return view('mantenedor.create', compact('mode'));   
+        return view('mantenedor.create', compact('mantenedor','mode'));   
     }
 
-    public function update(){
+    public function update(Request $request, int $id){
    
     }
 

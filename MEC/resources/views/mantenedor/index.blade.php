@@ -76,12 +76,16 @@
                                     </div>
                                     <div class="flex mt-4 flex-row-reverse gap-4">
                                         <div class="linkButton">
-                                            <x-eva-edit-outline class="size-6"/>
-                                            <a href="{{route('mantenedores.create')}}">Editar</a>
+                                            <a href="{{route('mantenedores.edit',$mantenedor->id)}}" class="flex">
+                                                <x-eva-edit-outline class="size-6"/>
+                                                <p>Editar</p>
+                                            </a>
                                         </div>
                                         <div class="linkButton">
-                                            <x-eva-trash-outline class="size-6"/>
-                                            <a href="{{route('mantenedores.create')}}">Excluir</a>
+                                            <a href="{{route('mantenedores.edit',$mantenedor->id)}}" class="flex">
+                                                <x-eva-trash-outline class="size-6"/>
+                                                <p>Editar</p>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

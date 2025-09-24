@@ -5,6 +5,7 @@
 .labeledInput{
     display: flex;
     flex-direction: column;
+    margin-bottom: 1rem;
 }
 
 .labeledInput input{
@@ -35,14 +36,4 @@ a {
 .linkButton:hover{
     border-color: rgb(129 140 248);
     color: rgb(129 140 248);
-}
-
-.linkButton:active{
-    border-color: rgb(67 56 202);
-    color: rgb(67 56 202);
-}
-
-.linkButton:focus{
-    border-color: rgb(67 56 202);
-    color: rgb(67 56 202);
 }
