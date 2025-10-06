@@ -38,4 +38,4 @@ Route::resource('criterios', CriterioController::class);
 Route::resource('avaliacoes', AvaliacaoController::class);
 Route::resource('evidencias', EvidenciaController::class);
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

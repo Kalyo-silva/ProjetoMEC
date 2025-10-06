@@ -10,4 +10,9 @@ class instituicao extends Model
 
     const CREATED_AT = 'data_criacao';
     const UPDATED_AT = 'data_alteracao';
+
+    public function mantenedor()
+    {
+        return $this->belongsTo(mantenedor::class, 'id_mantenedor', 'id');
+    }
 }

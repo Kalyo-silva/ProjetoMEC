@@ -10,13 +10,13 @@
                         </div>
                     @endif
 
-                    <div class="flex items-center">   
+                    <div class="flex items-center">
                         <x-uni-university-o class="size-6 mr-2 text-gray-400"/>
                         <h2 class="text-lg border-b-2 border-indigo-400 w-fit">@if ($mode = 'edit') Alteração do Mantenedor @else Cadastro de Mantenedores @endif</h2>
                     </div>
 
-                    @if ($mode == 'edit' && isset($mantenedor))     
-                        <form method="POST" class="mt-4 border rounded p-6 shadow-lg" enctype="multipart/form-data" action="{{ route('mantenedores.update', $mantenedor->id) }}"> 
+                    @if ($mode == 'edit' && isset($mantenedor))
+                        <form method="POST" class="mt-4 border rounded p-6 shadow-lg" enctype="multipart/form-data" action="{{ route('mantenedores.update', $mantenedor->id) }}">
                         @method("PUT")
                     @else
                         <form method="POST" class="mt-4 border rounded p-6 shadow-lg" enctype="multipart/form-data" action="{{ route('mantenedores.store') }}">
@@ -35,7 +35,7 @@
                                 </div>
                                 <div class='labeledInput w-2/12'>
                                     <label for='uf'>UF</label>
-                                    <select name="uf" id="uf">
+                                    <select name="uf" id="uf" class="rounded">
                                         <option value="AC" @if($mode == 'edit' && isset($mantenedor) && $mantenedor->uf == 'AC') selected @endif>AC</option>
                                         <option value="AL" @if($mode == 'edit' && isset($mantenedor) && $mantenedor->uf == 'AL') selected @endif>AL</option>
                                         <option value="AP" @if($mode == 'edit' && isset($mantenedor) && $mantenedor->uf == 'AP') selected @endif>AP</option>
@@ -82,7 +82,7 @@
                                 <input name='logradouro' maxlength="200" id='logradouro' type='text' @if($mode == 'edit' && isset($mantenedor)) value="{{$mantenedor->logradouro}}" @endif>
                             </div>
                         </div>
-                        
+
                         <div class='mt-8 flex gap-4 flex-row-reverse'>
                             <button type="submit" class='linkButton hover:text-green-700 hover:border-green-700'>Salvar</button>
                             @if ($mode == 'edit')

@@ -19,6 +19,10 @@
                     <x-nav-link :href="route('mantenedores.index')" :active="request()->routeIs('mantenedores.index')" class="w-full">
                         {{ __('Mantenedores') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('instituicoes.index')" :active="request()->routeIs('instituicoes.index')" class="w-full">
+                        {{ __('Instituições') }}
+                    </x-nav-link>
                 </div>
 
 

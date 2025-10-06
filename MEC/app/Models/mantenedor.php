@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class mantenedor extends Model
-{    
+{
     protected $table = 'mantenedor';
 
     protected $fillable = [
@@ -19,4 +19,9 @@ class mantenedor extends Model
 
     const CREATED_AT = 'data_criacao';
     const UPDATED_AT = 'data_alteracao';
+
+    public function instituicao()
+    {
+        return $this->hasMany(instituicao::class, 'id_mantenedor', 'id');
+    }
 }
