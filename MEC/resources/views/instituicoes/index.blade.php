@@ -20,17 +20,30 @@
                     @if($listaInstituicoes->isEmpty())
                         <p>Nenhuma Instituição Encontrado.</p>
                     @else
-                        @foreach ($listaInstituicoes as $inst)
-                            <div class="border rounded p-4 flex items-center gap-4 mb-2">
-                                <div>
-                                    <img class="size-16 object-contain" src="{{asset('img_instituicoes/'.$inst->logo)}}" alt="logo">
+                        <div class="grid grid-cols-2 gap-4">
+                            @foreach ($listaInstituicoes as $inst)
+                                <div class="border rounded p-4 flex items-center gap-4 mb-2 justify-between">
+                                    <div class="flex justify-between w-full">
+                                        <div class="flex items-center gap-4">
+                                            <div>
+                                                <img class="size-16 object-cover border rounded" src="{{asset('img_instituicoes/'.$inst->logo)}}" alt="logo">
+                                            </div>
+                                            <div>
+                                                <h2 class="font-bold">{{$inst->nome}}</h2>
+                                                <p class="italic text-gray-500">{{$inst->sigla}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex gap-2 items-center">
+                                            <x-eva-search-outline class="size-6 text-gray-300 hover:text-gray-700 hover:cursor-pointer"/>
+                                            <a href="{{route('instituicoes.edit',$inst->id)}}">
+                                                <x-eva-edit-outline class="size-6 text-gray-300 hover:text-gray-700 hover:cursor-pointer"/>
+                                            </a>
+                                            <x-eva-trash-outline class="size-6 text-gray-300 hover:text-gray-700 hover:cursor-pointer"/>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h2 class="font-bold">{{$inst->nome}}</h2>
-                                    <p class="italic text-gray-500">{{$inst->sigla}}</p>
-                                </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        </div>
                     @endif
 
                     <div class="mt-4">

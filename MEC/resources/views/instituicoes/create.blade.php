@@ -12,7 +12,7 @@
 
                     <div class="flex items-center">
                         <x-uni-university-o class="size-6 mr-2 text-gray-400"/>
-                        <h2 class="text-lg border-b-2 border-indigo-400 w-fit">@if ($mode = 'edit') Alteração da Instituição @else Cadastro de Instituição @endif</h2>
+                        <h2 class="text-lg border-b-2 border-indigo-400 w-fit">@if ($mode = 'edit' && isset($instituicao)) Alteração da Instituição @else Cadastro de Instituição @endif</h2>
                     </div>
 
                     @if ($mode == 'edit' && isset($instituicao))
@@ -27,8 +27,12 @@
                                 <div class="mr-4">
                                     <label for="logo">
                                         <p>Logo</p>
-                                        <div id='preview_logo'>
-                                            <img src="{{asset('img/defaultcover.png')}}" alt="logo" class="size-32 rounded shadow-lg border">
+                                        <div id='preview_logo' class="cursor-pointer">
+                                            @if ($mode == 'edit' && isset($instituicao) && $instituicao->logo != '')
+                                                <img src="{{asset('img_instituicoes/'. $instituicao->logo)}}" alt="logo" class="size-32 rounded shadow-lg border object-cover">
+                                            @else
+                                                <img src="{{asset('img/defaultcover.png')}}" alt="logo" class="size-32 rounded shadow-lg border object-cover">
+                                            @endif
                                         </div>
                                     </label>
                                     <input type="file" name="logo" id="logo" hidden accept=".jpg, .jpeg, .png">
@@ -106,9 +110,9 @@
                             <div class='labeledInput'>
                                 <label for='id_mantenedor'>Mantenedor</label>
                                 <select name="id_mantenedor" id="id_mantenedor" class="rounded">
-                                        <option value="0" selected>Selecione</option>
+                                        <option value="0">Selecione</option>
                                     @foreach ($listaMantenedores as $mantenedor)
-                                        <option value="{{$mantenedor->id}}">{{$mantenedor->nome}}</option>
+                                        <option @if($mode == 'edit' && isset($instituicao) && $instituicao->id_mantenedor == $mantenedor->id) selected @endif value="{{$mantenedor->id}}">{{$mantenedor->nome}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -116,7 +120,7 @@
 
                         <div class='mt-8 flex gap-4 flex-row-reverse'>
                             <button type="submit" class='linkButton hover:text-green-700 hover:border-green-700'>Salvar</button>
-                            @if ($mode == 'edit')
+                            @if ($mode == 'edit' && isset($mantenedor))
                                 <a href="{{route('instituicoes.index')}}" class='linkButton hover:text-red-700 hover:border-red-700'>Cancelar</a>
                             @else
                                 <button type="reset" class='linkButton hover:text-red-700 hover:border-red-700'>Limpar</button>
@@ -155,7 +159,7 @@
                 const image = document.createElement("img");
                 image.src = URL.createObjectURL(file);
                 image.alt = file.name;
-                image.className = "size-32 rounded object-contain shadow-lg border";
+                image.className = "size-32 rounded object-cover shadow-lg border";
 
                 Preview.appendChild(image);
             }

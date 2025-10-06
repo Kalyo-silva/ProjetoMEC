@@ -12,7 +12,7 @@
 
                     <div class="flex items-center">
                         <x-uni-university-o class="size-6 mr-2 text-gray-400"/>
-                        <h2 class="text-lg border-b-2 border-indigo-400 w-fit">@if ($mode = 'edit') Alteração do Mantenedor @else Cadastro de Mantenedores @endif</h2>
+                        <h2 class="text-lg border-b-2 border-indigo-400 w-fit">@if ($mode = 'edit' && isset($mantenedor)) Alteração do Mantenedor @else Cadastro de Mantenedores @endif</h2>
                     </div>
 
                     @if ($mode == 'edit' && isset($mantenedor))
@@ -85,7 +85,7 @@
 
                         <div class='mt-8 flex gap-4 flex-row-reverse'>
                             <button type="submit" class='linkButton hover:text-green-700 hover:border-green-700'>Salvar</button>
-                            @if ($mode == 'edit')
+                            @if ($mode == 'edit' && isset($mantenedor))
                                 <a href="{{route('mantenedores.index')}}" class='linkButton hover:text-red-700 hover:border-red-700'>Cancelar</a>
                             @else
                                 <button type="reset" class='linkButton hover:text-red-700 hover:border-red-700'>Limpar</button>

@@ -73,14 +73,17 @@
                                                 @if (!empty($mantenedor->instituicao))
                                                     <div class="max-h-64 overflow-y-scroll">
                                                         @foreach ($mantenedor->instituicao as $inst)
-                                                            <div class="flex gap-4 items-center mb-2 py-2 px-4 border rounded">
-                                                                <div>
-                                                                    <img class='size-12 rounded object-contain border shadow-lg p-1' src="{{asset('img_instituicoes/'.$inst->logo)}}" alt="logo">
+                                                            <div class="flex gap-4 items-center mb-2 py-2 px-4 border rounded justify-between">
+                                                                <div class="flex gap-4 items-center">
+                                                                    <div>
+                                                                        <img class='size-12 rounded object-cover border shadow-lg' src="{{asset('img_instituicoes/'.$inst->logo)}}" alt="logo">
+                                                                    </div>
+                                                                    <div>
+                                                                        <h2 class="font-bold">{{$inst->nome}}</h2>
+                                                                        <p class="text-sm">{{$inst->sigla}}</p>
+                                                                    </div>
                                                                 </div>
-                                                                <div>
-                                                                    <h2 class="font-bold">{{$inst->nome}}</h2>
-                                                                    <p class="text-sm">{{$inst->sigla}}</p>
-                                                                </div>
+                                                                <x-eva-search-outline class="size-6 text-gray-300 hover:text-gray-700 hover:cursor-pointer"/>
                                                             </div>
                                                         @endforeach
                                                     </div>
