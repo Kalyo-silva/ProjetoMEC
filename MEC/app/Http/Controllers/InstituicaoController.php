@@ -16,9 +16,15 @@ class InstituicaoController extends Controller
         return view('instituicoes.index', compact('listaInstituicoes'));
     }
 
-    public function show()
+    public function show(int $id)
     {
+        $inst = Instituicao::findOrFail($id);
 
+        if ($inst) {
+            return view('instituicoes.show', compact('inst'));
+        }
+
+        return redirect()->route('instituicoes.index')->with('error', 'Instituição não encontrada...');
     }
 
     public function create()

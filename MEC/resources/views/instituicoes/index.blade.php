@@ -10,7 +10,10 @@
                     @endif
 
                     <div class="flex justify-between items-center mb-4">
-                        <h2 class='text-xl border-b-2 border-indigo-400 font-bold'>Lista de Instituições</h2>
+                        <div class="flex gap-1 items-center">
+                            <x-lucide-university class="size-6 text-gray-400"/>
+                            <h2 class='text-xl border-b-2 border-indigo-400 font-bold'>Lista da Instituições</h2>
+                        </div>
                         <div class="linkButton">
                             <x-fas-plus class="size-6"/>
                             <a href="{{route('instituicoes.create')}}">Novo</a>
@@ -34,7 +37,9 @@
                                             </div>
                                         </div>
                                         <div class="flex gap-2 items-center">
-                                            <x-eva-search-outline class="size-6 text-gray-300 hover:text-gray-700 hover:cursor-pointer"/>
+                                            <a href="{{route('instituicoes.show', $inst->id)}}">
+                                                <x-eva-search-outline class="size-6 text-gray-300 hover:text-gray-700 hover:cursor-pointer"/>
+                                            </a>
                                             <a href="{{route('instituicoes.edit',$inst->id)}}">
                                                 <x-eva-edit-outline class="size-6 text-gray-300 hover:text-gray-700 hover:cursor-pointer"/>
                                             </a>

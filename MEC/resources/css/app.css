@@ -32,8 +32,3 @@ a {
 .linkButton svg{
     margin-right: 0.25rem;
 }
-
-.linkButton:hover{
-    border-color: rgb(129 140 248);
-    color: rgb(129 140 248);
-}

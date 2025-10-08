@@ -11,7 +11,10 @@
 
                     <div class="flex justify-between items-center">
 
-                        <h2 class='text-xl border-b-2 border-indigo-400 font-bold'>Lista de Mantenedores</h2>
+                        <div class="flex gap-1 items-center">
+                            <x-uni-university-o class="size-6 text-gray-400"/>
+                            <h2 class='text-xl border-b-2 border-indigo-400 font-bold'>Lista de Mantenedores</h2>
+                        </div>
                         <div class="linkButton">
                             <x-fas-plus class="size-6"/>
                             <a href="{{route('mantenedores.create')}}">Novo</a>
@@ -70,7 +73,7 @@
                                         <div class="shadow-lg border rounded p-4 w-1/2">
                                             <h2 class="font-bold border-b-2 w-fit border-indigo-400 mb-2">Instituições Vinculadas</h2>
 
-                                                @if (!empty($mantenedor->instituicao))
+                                                @if (count($mantenedor->instituicao) != 0)
                                                     <div class="max-h-64 overflow-y-scroll">
                                                         @foreach ($mantenedor->instituicao as $inst)
                                                             <div class="flex gap-4 items-center mb-2 py-2 px-4 border rounded justify-between">
@@ -83,7 +86,9 @@
                                                                         <p class="text-sm">{{$inst->sigla}}</p>
                                                                     </div>
                                                                 </div>
-                                                                <x-eva-search-outline class="size-6 text-gray-300 hover:text-gray-700 hover:cursor-pointer"/>
+                                                                <a href="{{route('instituicoes.show', $inst->id)}}">
+                                                                    <x-eva-search-outline class="size-6 text-gray-300 hover:text-gray-700 hover:cursor-pointer"/>
+                                                                </a>
                                                             </div>
                                                         @endforeach
                                                     </div>
@@ -95,16 +100,16 @@
                                         </div>
                                     </div>
                                     <div class="flex mt-4 flex-row-reverse gap-4">
-                                        <div class="linkButton">
+                                        <div class="linkButton hover:text-indigo-400 hover:border-indigo-400">
                                             <a href="{{route('mantenedores.edit',$mantenedor->id)}}" class="flex">
                                                 <x-eva-edit-outline class="size-6"/>
                                                 <p>Editar</p>
                                             </a>
                                         </div>
-                                        <div class="linkButton">
+                                        <div class="linkButton hover:text-red-500 hover:border-red-500">
                                             <a href="{{route('mantenedores.edit',$mantenedor->id)}}" class="flex">
                                                 <x-eva-trash-outline class="size-6"/>
-                                                <p>Editar</p>
+                                                <p>Excluir</p>
                                             </a>
                                         </div>
                                     </div>
