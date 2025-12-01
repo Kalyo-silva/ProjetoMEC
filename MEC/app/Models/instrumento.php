@@ -8,6 +8,11 @@ class instrumento extends Model
 {
     protected $table = 'instrumento';
 
+    protected $fillable = [
+        'titulo',
+        'ano',
+    ];
+
     const CREATED_AT = 'data_criacao';
     const UPDATED_AT = 'data_alteracao';
 }
