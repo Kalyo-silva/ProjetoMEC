@@ -3,11 +3,8 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    @if (session('success'))
-                        <div class="mb-4 p-4 bg-green-100 text-green-800 rounded">
-                            {{ session('success') }}
-                        </div>
-                    @endif
+
+                    <x-popup-message-handler/>
 
                     <div class="flex justify-between items-center">
 
@@ -125,7 +122,7 @@
                                             </a>
                                         </div>
                                         <div class="linkButton hover:text-red-500 hover:border-red-500">
-                                            <a href="{{ route('mantenedores.edit', $mantenedor->id) }}" class="flex">
+                                            <a href="{{ route('mantenedores.show', $mantenedor->id) }}" class="flex">
                                                 <x-eva-trash-outline class="size-6" />
                                                 <p>Excluir</p>
                                             </a>

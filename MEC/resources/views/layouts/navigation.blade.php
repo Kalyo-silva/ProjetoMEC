@@ -23,6 +23,22 @@
                     <x-nav-link :href="route('instituicoes.index')" :active="request()->routeIs('instituicoes.index')" class="w-full">
                         {{ __('Instituições') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('professores.index')" :active="request()->routeIs('professores.index')" class="w-full">
+                        {{ __('Professores') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('professores.index')" :active="request()->routeIs('professores.index')" class="w-full">
+                        {{ __('Cursos') }}
+                    </x-nav-link>
+                    
+                    <x-nav-link :href="route('professores.index')" :active="request()->routeIs('professores.index')" class="w-full">
+                        {{ __('Avaliações') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('professores.index')" :active="request()->routeIs('professores.index')" class="w-full">
+                        {{ __('Instrumentos') }}
+                    </x-nav-link>
                 </div>
 
 
