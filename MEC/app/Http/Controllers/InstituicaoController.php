@@ -140,8 +140,14 @@ class InstituicaoController extends Controller
 
     }
 
-    public function destroy()
+    public function destroy(int $id)
     {
+        $instituicao = Instituicao::findOrFail($id);
 
+        if ($instituicao->delete()){
+            return redirect()->route('instituicoes.index')->with('success', 'Instituição removida com sucesso!');
+        }
+
+        return redirect()->route('instituicoes.index')->with('error', 'Erro ao remover a Instituição.');
     }
 }

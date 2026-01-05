@@ -17,7 +17,7 @@
                                 </a>
                             </div>
                             <div class="linkButton hover:text-red-500 hover:border-red-500">
-                                <a href="{{route('instituicoes.edit',$inst->id)}}" class="flex">
+                                <a onclick='OpenModal()' class="flex">
                                     <x-eva-trash-outline class="size-6"/>
                                     <p>Excluir</p>
                                 </a>
@@ -57,4 +57,7 @@
             </div>
         </div>
     </div>
+
+
+    <x-confirm-remove-instituicao :id="$inst->id" :nome="$inst->nome"/>
 </x-app-layout>

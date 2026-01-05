@@ -14,10 +14,10 @@
                             <x-lucide-university class="size-6 text-gray-400"/>
                             <h2 class='text-xl border-b-2 border-indigo-400 font-bold'>Lista da Instituições</h2>
                         </div>
-                        <div class="linkButton">
+                        <a href="{{route('instituicoes.create')}}" class="linkButton">
                             <x-fas-plus class="size-6"/>
-                            <a href="{{route('instituicoes.create')}}">Novo</a>
-                        </div>
+                            <p>Novo</p>
+                        </a>
                     </div>
 
                     @if($listaInstituicoes->isEmpty())
@@ -57,9 +57,9 @@
                                             </div>
                                             <div class="flex gap-2 items-start  ">
                                                 <div class="hidden options">
-                                                    <x-eva-trash-outline class="size-6 text-gray-300 hover:text-gray-700 hover:cursor-pointer"/>
-                                                    <a href="{{route('instituicoes.edit',$inst->id)}}">
-                                                        <x-eva-edit-outline class="size-6 text-gray-300 hover:text-gray-700 hover:cursor-pointer"/>
+                                                    <a href="{{ route('instituicoes.show', $inst->id) }}">
+                                                        <x-eva-search-outline
+                                                            class="size-6 text-gray-300 hover:text-gray-700 hover:cursor-pointer" />
                                                     </a>
                                                 </div>
 
