@@ -14,17 +14,6 @@ class ProfessorController extends Controller
         return view('professores.index', compact('listaProfessores'));
     }
 
-    public function show(int $id)
-    {
-        $professor = professor::findOrFail($id);
-
-        if ($professor) {
-            return view('professores.show', compact('professor'));
-        }
-
-        return redirect()->route('professores.index')->with('error', 'Professor não encontrado...');
-    }
-
     public function create()
     {
         $mode = 'create';
