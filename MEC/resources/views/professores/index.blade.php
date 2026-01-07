@@ -85,8 +85,8 @@
         const info = container.querySelectorAll('div.info');
         const options = container.querySelectorAll('div.options');
 
-        if (container.className.includes(' col-span-2 ')){
-            container.className = container.className.replace(' col-span-2 ', '')
+        if (container.className.includes(' row-span-3 ')){
+            container.className = container.className.replace(' row-span-3 ', '')
 
             for (let i = 0; i < labels.length; i++) {
                 labels[i].className += "hidden"
@@ -101,7 +101,7 @@
             }
         }
         else{
-            container.className += ' col-span-2 '
+            container.className += ' row-span-3 '
 
             for (let i = 0; i < labels.length; i++) {
                 labels[i].className = labels[i].className.replace("hidden", "")

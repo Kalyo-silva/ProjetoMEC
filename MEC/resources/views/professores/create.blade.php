@@ -81,6 +81,6 @@
     </div>
 
     @if ($mode == 'edit' && isset($professor))
-        <x-confirm-remove-professor :id="$professor->id" :nome="$professor->nome"/>
+        <x-confirm-remove :id="$professor->id" :nome="$professor->nome" :route="'professores.destroy'"/>
     @endif
 </x-app-layout>

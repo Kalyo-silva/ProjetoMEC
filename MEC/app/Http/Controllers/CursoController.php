@@ -15,18 +15,7 @@ class CursoController extends Controller
         $listaCursos = curso::orderBy('nome', 'asc')->paginate(10);
         return view('cursos.index', compact('listaCursos'));
     }
-
-    public function show(int $id)
-    {
-        $curso = curso::findOrFail($id);
-
-        if ($curso) {
-            return view('cursos.show', compact('curso'));
-        }
-
-        return redirect()->route('cursos.index')->with('error', 'Curso não encontrado...');
-    }
-
+    
     public function create()
     {
         $mode = 'create';

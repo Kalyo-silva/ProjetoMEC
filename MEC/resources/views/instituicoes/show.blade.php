@@ -59,5 +59,5 @@
     </div>
 
 
-    <x-confirm-remove-instituicao :id="$inst->id" :nome="$inst->nome"/>
+    <x-confirm-remove :id="$inst->id" :nome="$inst->nome" $route="'instituicoes.destroy'"/>
 </x-app-layout>
