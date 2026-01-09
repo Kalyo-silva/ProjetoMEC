@@ -55,8 +55,7 @@
                                             <div class="flex gap-2 items-start  ">
                                                 <div class="hidden options">
                                                     <a href="{{ route('professores.edit', $prof->id) }}">
-                                                        <x-eva-edit-outline
-                                                            class="size-6 text-gray-300 hover:text-gray-700 hover:cursor-pointer" />
+                                                        <x-eva-edit-outline class="size-6 text-gray-300 hover:text-gray-700 hover:cursor-pointer" />
                                                     </a>
                                                 </div>
 

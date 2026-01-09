@@ -36,7 +36,7 @@
                         {{ __('Avaliações') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('professores.index')" :active="request()->routeIs('professores.index')" class="w-full">
+                    <x-nav-link :href="route('instrumentos.index')" :active="request()->routeIs('instrumentos.index')" class="w-full">
                         {{ __('Instrumentos') }}
                     </x-nav-link>
                 </div>

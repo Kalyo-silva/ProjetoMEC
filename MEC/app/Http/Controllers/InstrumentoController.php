@@ -10,7 +10,7 @@ class InstrumentoController extends Controller
 {
     public function index()
     {
-        $listaInstrumentos = instrumento::orderBy('ano', 'desc')->paginate(10);
+        $listaInstrumentos = instrumento::orderBy('data_criacao', 'desc')->paginate(10);
         return view('instrumentos.index', compact('listaInstrumentos'));
     }
 
@@ -68,8 +68,8 @@ class InstrumentoController extends Controller
     public function update(Request $request, int $id)
     {
         $validator = Validator::make($request->all(), [
-            'titulo' => 'required|string|max:255',
-            'ano'    => 'required|integer|min:1900|max:2100'
+            'titulo_update' => 'required|string|max:255',
+            'ano_update'    => 'required|integer|min:1900|max:2100'
         ]);
 
         if ($validator->fails()) {
@@ -81,8 +81,8 @@ class InstrumentoController extends Controller
 
         $instrumento = instrumento::findOrFail($id);
 
-        $instrumento->titulo = $request->input('titulo');
-        $instrumento->ano = $request->input('ano');
+        $instrumento->titulo = $request->input('titulo_update');
+        $instrumento->ano = $request->input('ano_update');
 
         if ($instrumento->save()) {
             return redirect()->route('instrumentos.index')->with('success', 'Instrumento atualizado com sucesso!');

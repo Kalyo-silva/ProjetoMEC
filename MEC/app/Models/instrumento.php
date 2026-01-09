@@ -11,6 +11,7 @@ class instrumento extends Model
     protected $fillable = [
         'titulo',
         'ano',
+        'data_criacao'
     ];
 
     const CREATED_AT = 'data_criacao';
