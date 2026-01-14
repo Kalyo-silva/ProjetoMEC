@@ -24,7 +24,7 @@
                                 <div class="flex gap-4">
                                     <div class='flex border rounded px-4 py-2 w-1/2 justify-between'>
                                         <div class="flex gap-4">
-                                            <div class="px-4 py-2">
+                                            <div class="py-2">
                                                 <p class="text-indigo-400 font-bold label">Titulo da Avaliação</p>
                                                 <p class="text-lg">{{$instrumento->titulo}}</p>
                                             </div>
@@ -38,7 +38,21 @@
                                         </div>
                                     </div>
                                     <div class="flex border rounded px-4 py-2 w-1/2">
+                                    </div>
+                                </div>
+                                <div class="mt-4 rounded border px-4 py-2">
+                                    <div class="flex justify-between">
+                                        <p class="text-indigo-400 font-bold label">Dimensões da Avaliação</p>
 
+                                        <a onclick="OpenModal('createDimensao'), CreateDimensao({{ $instrumento->id }})" class="flex items-center gap-1 text-indigo-400">
+                                            <x-fas-plus class="size-4"/>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        @foreach ($instrumento->dimensoes as $dimensao)
+                                            <x-dropdown-section :id="'dime'.$dimensao->id" :title="$dimensao->descricao" :mode="'dimensoes'">
+                                            </x-dropdown-section>
+                                        @endforeach
                                     </div>
                                 </div>
                             </x-dropdown-section>
@@ -91,6 +105,26 @@
             </div>
         </form>
     </x-popup-new-instrumento>
+
+    <x-popup-new-instrumento :title="'Nova Dimensão'" :id="'createDimensao'">
+        <form method="POST" class="mt-4" enctype="multipart/form-data" action="{{ route('dimensoes.store') }}">
+        @csrf
+            <div class='flex justify-between gap-4'>
+                <input type="hidden" name="id_instrumento" id='id_instrumento'>
+                <div class='labeledInput w-10/12'>
+                    <label for='descricao'>Descrição da Dimensão</label>
+                    <input name='descricao' id='descricao' type='text'>
+                </div>
+                <div class='labeledInput w-2/12'>
+                    <label for='sequencia'>Sequência</label>
+                    <input name='sequencia' id='sequencia' type='number' maxlength="4">
+                </div>
+            </div>
+            <div class='flex items-center gap-4 flex-row-reverse'>
+                <button type="submit" class='linkButton hover:text-green-700 hover:border-green-700 w-2/12 justify-center text-center'>Salvar</button>
+            </div>
+        </form>
+    </x-popup-new-instrumento>
 </x-app-layout>
 
 <script>
@@ -98,5 +132,9 @@
         document.getElementById('formUpdate').action = '/instrumentos/'+id
         document.getElementById('titulo_update').value = titulo
         document.getElementById('ano_update').value = ano
+    }
+
+    function CreateDimensao(id){
+        document.getElementById('id_instrumento').value = id
     }
 </script>

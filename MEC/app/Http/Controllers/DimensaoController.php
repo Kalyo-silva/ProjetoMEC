@@ -56,10 +56,10 @@ class DimensaoController extends Controller
         $dimensao = new dimensao($request->all());
 
         if ($dimensao->save()) {
-            return redirect()->route('dimensoes.index')->with('success', 'Dimensão cadastrada com sucesso!');
+            return redirect()->route('instrumentos.index')->with('success', 'Dimensão cadastrada com sucesso!');
         }
 
-        return redirect()->route('dimensoes.index')->with('error', 'Erro ao cadastrar a dimensão');
+        return redirect()->route('instrumentos.index')->with('error', 'Erro ao cadastrar a dimensão');
     }
 
     public function edit(int $id)

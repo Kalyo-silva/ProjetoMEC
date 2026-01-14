@@ -1,4 +1,4 @@
-<div class="rounded border mt-4 px-4 py-4 shadow-lg">
+<div class="rounded border mt-4 px-4 py-4">
     <script>
         function OpenMenuDetalhes(button, id) {
             var menu = document.getElementById(id);
@@ -21,6 +21,8 @@
                 <x-uni-university-o class="size-6 text-gray-400" />
             @elseif ($mode == 'instrumentos')
                 <x-eva-clipboard-outline class="size-6 text-gray-400" />
+            @elseif ($mode == 'dimensoes')
+                <x-eva-cube-outline class="size-6 text-gray-400" />
             @endif
             
             <h2 class="font-bold">{{ $title }}</h2>
