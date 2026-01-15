@@ -50,7 +50,21 @@
                                     </div>
                                     <div>
                                         @foreach ($instrumento->dimensoes as $dimensao)
-                                            <x-dropdown-section :id="'dime'.$dimensao->id" :title="$dimensao->descricao" :mode="'dimensoes'">
+                                            <x-dropdown-section :id="'dime'.$dimensao->id" :title="$dimensao->sequencia.'. '.$dimensao->descricao" :mode="'dimensoes'">
+                                                <div>
+                                                    @foreach ($dimensao->indicadores as $indicadores)
+                                                        <div class="px-4 text-indigo-400 flex gap-1 mb-2">
+                                                            <x-eva-checkmark-square class="size-6"/>
+                                                            <p>{{$indicadores->sequencia}}. {{$indicadores->descricao}}</p>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                                <div class="flex flex-row-reverse">
+                                                    <a onclick="OpenModal('createIndicador'), createIndicador({{ $dimensao->id }})" class="linkButton">
+                                                        <x-eva-checkmark-square class="size-6"/>
+                                                        <p>Novo Indicador</p>
+                                                    </a>
+                                                </div>
                                             </x-dropdown-section>
                                         @endforeach
                                     </div>
@@ -125,6 +139,27 @@
             </div>
         </form>
     </x-popup-new-instrumento>
+
+
+    <x-popup-new-instrumento :title="'Novo Indicador'" :id="'createIndicador'">
+        <form method="POST" class="mt-4" enctype="multipart/form-data" action="{{ route('indicadores.store') }}">
+        @csrf
+            <div class='flex justify-between gap-4'>
+                <input type="hidden" name="id_dimensao" id='id_dimensao'>
+                <div class='labeledInput w-10/12'>
+                    <label for='descricao_indicador'>Descrição do Indicador</label>
+                    <input name='descricao_indicador' id='descricao_indicador' type='text'>
+                </div>
+                <div class='labeledInput w-2/12'>
+                    <label for='sequencia_indicador'>Sequência</label>
+                    <input name='sequencia_indicador' id='sequencia_indicador' type='number' maxlength="4">
+                </div>
+            </div>
+            <div class='flex items-center gap-4 flex-row-reverse'>
+                <button type="submit" class='linkButton hover:text-green-700 hover:border-green-700 w-2/12 justify-center text-center'>Salvar</button>
+            </div>
+        </form>
+    </x-popup-new-instrumento>
 </x-app-layout>
 
 <script>
@@ -136,5 +171,9 @@
 
     function CreateDimensao(id){
         document.getElementById('id_instrumento').value = id
+    }
+    
+    function createIndicador(id){
+        document.getElementById('id_dimensao').value = id
     }
 </script>

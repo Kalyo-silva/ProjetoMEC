@@ -22,4 +22,7 @@ class dimensao extends Model
         return $this->belongsTo(instrumento::class, 'id_instrumento');
     }
 
+    public function indicadores(){
+        return $this->hasMany(indicador::class, 'id_dimensao', 'id')->orderBy('sequencia', 'asc');
+    }
 }

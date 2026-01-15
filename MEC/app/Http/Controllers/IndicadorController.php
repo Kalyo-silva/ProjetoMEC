@@ -43,8 +43,8 @@ class IndicadorController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'id_dimensao' => 'required|integer',
-            'sequencia'   => 'required|integer|min:1',
-            'descricao'   => 'required|string|max:500'
+            'sequencia_indicador'   => 'required|integer|min:1',
+            'descricao_indicador'   => 'required|string|max:500'
         ]);
 
         if ($validator->fails()) {
@@ -53,13 +53,17 @@ class IndicadorController extends Controller
                 ->with('error', 'Dados inválidos, tente novamente.');
         }
 
-        $indicador = new indicador($request->all());
+        $indicador = new indicador();
+
+        $indicador->id_dimensao = $request->input('id_dimensao');
+        $indicador->sequencia = $request->input('sequencia_indicador');
+        $indicador->descricao = $request->input('descricao_indicador');
 
         if ($indicador->save()) {
-            return redirect()->route('indicadores.index')->with('success', 'Indicador cadastrado com sucesso!');
+            return redirect()->route('instrumentos.index')->with('success', 'Indicador cadastrado com sucesso!');
         }
 
-        return redirect()->route('indicadores.index')->with('error', 'Erro ao cadastrar o indicador');
+        return redirect()->route('instrumentos.index')->with('error', 'Erro ao cadastrar o indicador');
     }
 
     public function edit(int $id)
