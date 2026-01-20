@@ -155,6 +155,27 @@
                     <input name='sequencia_indicador' id='sequencia_indicador' type='number' maxlength="4">
                 </div>
             </div>
+            <hr>
+            <div class="mt-4">
+                <p>Cadastrar Critérios de Avaliação</p>
+                <div class="flex gap-4">
+                    <div class='labeledInput w-11/12'>
+                        <textarea name="criterio" id="criterio" cols="100" rows="5"></textarea>
+                    </div>
+                    <a class="flex gap-2 items-center justify-center border border-gray-500 rounded px-4 py-2 h-fit w-1/12" onclick="addToListCriterios()">
+                        <x-fas-plus class="size-6 fill-indigo-400"/>
+                    </a>
+                </div>
+            </div>
+            <div class="mb-4">
+                <div class="text-indigo-400 flex gap-1 mb-2">
+                    <x-eva-checkmark-square class="size-6"/>
+                    <p>Critérios</p>
+                </div>   
+                <div id='listaCriterios' class="max-h-96 overflow-y-scroll">
+
+                </div>
+            </div>
             <div class='flex items-center gap-4 flex-row-reverse'>
                 <button type="submit" class='linkButton hover:text-green-700 hover:border-green-700 w-2/12 justify-center text-center'>Salvar</button>
             </div>
@@ -175,5 +196,15 @@
     
     function createIndicador(id){
         document.getElementById('id_dimensao').value = id
+    }
+
+    function addToListCriterios(){
+        input = document.getElementById('criterio');
+        container = document.getElementById('listaCriterios');
+
+        criterio = document.createElement('p');
+        criterio.innerText = input.value;
+
+        container.appendChild(criterio)
     }
 </script>

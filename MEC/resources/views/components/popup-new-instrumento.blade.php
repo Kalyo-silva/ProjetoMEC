@@ -1,5 +1,5 @@
 <div id="modal_{{ $id }}" class='hidden flex-col justify-center items-center w-full h-full fixed bg-black bg-opacity-40 top-0 left-0'>
-    <div class='bg-white rounded shadow-lg px-8 py-8'>
+    <div class='bg-white rounded shadow-lg px-8 py-8 max-w-screen-2xl'>
         <div class='flex items-center justify-between gap-32'>
             <div class='flex items-center'>
                 @if ($id == 'create')
