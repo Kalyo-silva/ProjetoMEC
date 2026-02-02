@@ -13,30 +13,37 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden sm:flex sm:flex-col w-full mt-4">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="w-full">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="w-full items-center gap-1">
+                        <x-eva-pie-chart-outline class="size-4 text-indigo-400" />
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('mantenedores.index')" :active="request()->routeIs('mantenedores.index')" class="w-full">
+                    <x-nav-link :href="route('mantenedores.index')" :active="request()->routeIs('mantenedores.index')" class="w-full items-center gap-1">
+                        <x-uni-university-o class="size-4 text-indigo-400" />
                         {{ __('Mantenedores') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('instituicoes.index')" :active="request()->routeIs('instituicoes.index')" class="w-full">
+                    <x-nav-link :href="route('instituicoes.index')" :active="request()->routeIs('instituicoes.index')" class="w-full items-center gap-1">
+                        <x-lucide-university class="size-4 text-indigo-400" />
                         {{ __('Instituições') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('professores.index')" :active="request()->routeIs('professores.index')" class="w-full">
+                    <x-nav-link :href="route('professores.index')" :active="request()->routeIs('professores.index')" class="w-full items-center gap-1">
+                        <x-eva-person-outline class="size-4 text-indigo-400" />
                         {{ __('Professores') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('cursos.index')" :active="request()->routeIs('cursos.index')" class="w-full">
+                    <x-nav-link :href="route('cursos.index')" :active="request()->routeIs('cursos.index')" class="w-full items-center gap-1">
+                        <x-eva-book-outline class="size-4 text-indigo-400" />
                         {{ __('Cursos') }}
                     </x-nav-link>
                     
-                    <x-nav-link :href="route('professores.index')" :active="request()->routeIs('professores.index')" class="w-full">
+                    <x-nav-link :href="route('professores.index')" :active="request()->routeIs('professores.index')" class="w-full items-center gap-1">
+                        <x-eva-award-outline class="size-4 text-indigo-400" />
                         {{ __('Avaliações') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('instrumentos.index')" :active="request()->routeIs('instrumentos.index')" class="w-full">
+                    <x-nav-link :href="route('instrumentos.index')" :active="request()->routeIs('instrumentos.index')" class="w-full items-center gap-1">
+                        <x-eva-clipboard-outline class="size-4 text-indigo-400" />
                         {{ __('Instrumentos') }}
                     </x-nav-link>
                 </div>

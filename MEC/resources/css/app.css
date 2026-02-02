@@ -31,3 +31,11 @@ a {
 .linkButton svg{
     margin-right: 0.25rem;
 }
+
+.dimensao-arrows{
+    visibility: hidden;
+}
+
+.item-dimensao:hover .dimensao-arrows{
+    visibility: inherit;
+}  

@@ -33,6 +33,9 @@ Route::resource('professores', ProfessorController::class);
 Route::resource('cursos', CursoController::class);
 Route::resource('instrumentos', InstrumentoController::class);
 Route::resource('dimensoes', DimensaoController::class);
+Route::post('/dimensoes/{id}/up', [DimensaoController::class, 'up'])->name('dimensoes.up')->middleware(['auth', 'verified']);
+Route::post('/dimensoes/{id}/down', [DimensaoController::class, 'down'])->name('dimensoes.down')->middleware(['auth', 'verified']);
+
 Route::resource('indicadores', IndicadorController::class);
 Route::resource('criterios', CriterioController::class);
 Route::resource('avaliacoes', AvaliacaoController::class);

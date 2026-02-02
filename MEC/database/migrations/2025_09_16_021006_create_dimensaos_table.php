@@ -18,8 +18,6 @@ return new class extends Migration
             $table->text('descricao');
             $table->timestamp('data_criacao');
             $table->timestamp('data_alteracao');
-
-            $table->unique(['id_instrumento', 'sequencia']);
         });
     }
 

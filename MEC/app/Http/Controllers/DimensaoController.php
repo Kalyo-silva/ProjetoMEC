@@ -39,6 +39,57 @@ class DimensaoController extends Controller
         ));
     }
 
+    public function up($id){
+        $dimensao = dimensao::findOrFail($id);
+
+        $dimensaoAnt = dimensao::where('id_instrumento', $dimensao->id_instrumento)
+                               ->where('sequencia', $dimensao->sequencia-1)
+                               ->first();
+
+        if ($dimensaoAnt){
+            $dimensao->sequencia = $dimensao->sequencia-1;
+            $dimensaoAnt->sequencia = $dimensaoAnt->sequencia+1;
+
+            if ($dimensao->save()){
+                if ($dimensaoAnt->save()){
+                    return redirect()->route('instrumentos.show', $dimensao->id_instrumento);
+                }
+
+                return redirect()->route('instrumentos.show', $dimensao->id_instrumento)->with('error', 'Erro ao alterar a dimensão');
+            } 
+
+            return redirect()->route('instrumentos.show', $dimensao->id_instrumento)->with('error', 'Erro ao alterar a dimensão');
+        }
+
+        return redirect()->route('instrumentos.show', $dimensao->id_instrumento)->with('error', 'Erro ao alterar a dimensão');
+    }
+
+    public function down($id){
+        $dimensao = dimensao::findOrFail($id);
+
+        $dimensaoNext = dimensao::where('id_instrumento', $dimensao->id_instrumento)
+                               ->where('sequencia', $dimensao->sequencia+1)
+                               ->first();
+
+        if ($dimensaoAnt){
+            $dimensao->sequencia = $dismensao->sequencia+1;
+            $dimensaoNext->sequencia = $dimensaoAnt->sequencia-1;
+
+            if ($dimensao->save()){
+                if ($dimensaoNext->save()){
+                    return redirect()->route('instrumentos.show', $dimensao->id_instrumento);
+                }
+
+                return redirect()->route('instrumentos.show', $dimensao->id_instrumento)->with('error', 'Erro ao alterar a dimensão');
+            } 
+
+            return redirect()->route('instrumentos.show', $dimensao->id_instrumento)->with('error', 'Erro ao alterar a dimensão');
+        }
+
+        return redirect()->route('instrumentos.show', $dimensao->id_instrumento)->with('error', 'Erro ao alterar a dimensão');
+
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -56,10 +107,10 @@ class DimensaoController extends Controller
         $dimensao = new dimensao($request->all());
 
         if ($dimensao->save()) {
-            return redirect()->route('instrumentos.index')->with('success', 'Dimensão cadastrada com sucesso!');
+            return redirect()->route('instrumentos.show', $dimensao->id_instrumento)->with('success', 'Dimensão cadastrada com sucesso!');
         }
 
-        return redirect()->route('instrumentos.index')->with('error', 'Erro ao cadastrar a dimensão');
+        return redirect()->route('instrumentos.show', $dimensao->id_instrumento)->with('error', 'Erro ao cadastrar a dimensão');
     }
 
     public function edit(int $id)

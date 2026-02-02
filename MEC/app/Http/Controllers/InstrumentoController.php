@@ -8,10 +8,20 @@ use Validator;
 
 class InstrumentoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $listaInstrumentos = instrumento::orderBy('data_criacao', 'desc')->paginate(10);
-        return view('instrumentos.index', compact('listaInstrumentos'));
+        $search = $request->input('search');
+
+        if ($search){
+            $listaInstrumentos = instrumento::where('titulo', 'LIKE', '%'.$search.'%')
+                                            ->orWhere('ano', 'LIKE', "%{$search}%")
+                                            ->orderBy('ano', 'desc')
+                                            ->paginate(10);
+        }
+        else{
+            $listaInstrumentos = instrumento::orderBy('ano', 'desc')->paginate(10);    
+        }
+        return view('instrumentos.index', compact('listaInstrumentos', 'search'));
     }
 
     public function show(int $id)
@@ -57,19 +67,11 @@ class InstrumentoController extends Controller
         return redirect()->route('instrumentos.index')->with('error', 'Erro ao cadastrar o instrumento');
     }
 
-    public function edit(int $id)
-    {
-        $mode = 'edit';
-        $instrumento = instrumento::findOrFail($id);
-
-        return view('instrumentos.create', compact('mode', 'instrumento'));
-    }
-
     public function update(Request $request, int $id)
     {
         $validator = Validator::make($request->all(), [
-            'titulo_update' => 'required|string|max:255',
-            'ano_update'    => 'required|integer|min:1900|max:2100'
+            'titulo' => 'required|string|max:255',
+            'ano'    => 'required|integer|min:1900|max:2100'
         ]);
 
         if ($validator->fails()) {
@@ -81,8 +83,8 @@ class InstrumentoController extends Controller
 
         $instrumento = instrumento::findOrFail($id);
 
-        $instrumento->titulo = $request->input('titulo_update');
-        $instrumento->ano = $request->input('ano_update');
+        $instrumento->titulo = $request->input('titulo');
+        $instrumento->ano = $request->input('ano');
 
         if ($instrumento->save()) {
             return redirect()->route('instrumentos.index')->with('success', 'Instrumento atualizado com sucesso!');
