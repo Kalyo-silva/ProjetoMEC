@@ -43,7 +43,7 @@ class IndicadorController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'id_dimensao' => 'required|integer',
-            'sequencia_indicador'   => 'required|integer|min:1',
+            'sequencia'   => 'required|integer|min:1',
             'descricao_indicador'   => 'required|string|max:500'
         ]);
 
@@ -56,14 +56,14 @@ class IndicadorController extends Controller
         $indicador = new indicador();
 
         $indicador->id_dimensao = $request->input('id_dimensao');
-        $indicador->sequencia = $request->input('sequencia_indicador');
+        $indicador->sequencia = $request->input('sequencia');
         $indicador->descricao = $request->input('descricao_indicador');
 
         if ($indicador->save()) {
-            return redirect()->route('instrumentos.index')->with('success', 'Indicador cadastrado com sucesso!');
+            return redirect()->route('dimensoes.show', $indicador->id_dimensao)->with('success', 'Indicador cadastrado com sucesso!');
         }
 
-        return redirect()->route('instrumentos.index')->with('error', 'Erro ao cadastrar o indicador');
+        return redirect()->route('instrumentos.show', $indicador->id_dimensao)->with('error', 'Erro ao cadastrar o indicador');
     }
 
     public function edit(int $id)
@@ -110,4 +110,58 @@ class IndicadorController extends Controller
 
         return redirect()->route('indicadores.index')->with('error', 'Erro ao remover o indicador');
     }
+
+
+
+    public function up($id){
+        $indicador = indicador::findOrFail($id);
+
+        $indicadorAnt = indicador::where('id_dimensao', $indicador->id_dimensao)
+                               ->where('sequencia', $indicador->sequencia-1)
+                               ->first();
+
+        if ($indicadorAnt){
+            $indicador->sequencia = $indicador->sequencia-1;
+            $indicadorAnt->sequencia = $indicadorAnt->sequencia+1;
+
+            if ($indicador->save()){
+                if ($indicadorAnt->save()){
+                    return redirect()->route('dimensoes.show', $indicador->id_dimensao);
+                }
+
+                return redirect()->route('dimensoes.show', $indicador->id_dimensao)->with('error', 'Erro ao alterar a dimensão');
+            } 
+
+            return redirect()->route('dimensoes.show', $indicador->id_dimensao)->with('error', 'Erro ao alterar a dimensão');
+        }
+
+        return redirect()->route('dimensoes.show', $indicador->id_dimensao)->with('error', 'Erro ao alterar a dimensão');
+    }
+
+    public function down($id){
+        $indicador = indicador::findOrFail($id);
+
+        $indicadorNext = indicador::where('id_dimensao', $indicador->id_dimensao)
+                               ->where('sequencia', $indicador->sequencia+1)
+                               ->first();
+
+        if ($indicadorNext){
+            $indicador->sequencia = $indicador->sequencia+1;
+            $indicadorNext->sequencia = $indicadorNext->sequencia-1;
+
+            if ($indicador->save()){
+                if ($indicadorNext->save()){
+                    return redirect()->route('dimensoes.show', $indicador->id_dimensao);
+                }
+
+                return redirect()->route('dimensoes.show', $indicador->id_dimensao)->with('error', 'Erro ao alterar a dimensão');
+            } 
+
+            return redirect()->route('dimensoes.show', $indicador->id_dimensao)->with('error', 'Erro ao alterar a dimensão');
+        }
+
+        return redirect()->route('dimensoes.show', $indicador->id_dimensao)->with('error', 'Erro ao alterar a dimensão');
+
+    }
+
 }

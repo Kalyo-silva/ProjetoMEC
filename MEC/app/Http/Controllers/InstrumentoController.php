@@ -13,8 +13,8 @@ class InstrumentoController extends Controller
         $search = $request->input('search');
 
         if ($search){
-            $listaInstrumentos = instrumento::where('titulo', 'LIKE', '%'.$search.'%')
-                                            ->orWhere('ano', 'LIKE', "%{$search}%")
+            $listaInstrumentos = instrumento::where('titulo', 'ILIKE', '%'.$search.'%')
+                                            ->orWhere('ano', 'ILIKE', "%{$search}%")
                                             ->orderBy('ano', 'desc')
                                             ->paginate(10);
         }

@@ -19,6 +19,6 @@ class instrumento extends Model
 
 
     public function dimensoes(){
-        return $this->hasMany(dimensao::class, 'id_instrumento', 'id');
+        return $this->hasMany(dimensao::class, 'id_instrumento', 'id')->orderBy('sequencia');
     }
 }

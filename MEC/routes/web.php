@@ -37,6 +37,9 @@ Route::post('/dimensoes/{id}/up', [DimensaoController::class, 'up'])->name('dime
 Route::post('/dimensoes/{id}/down', [DimensaoController::class, 'down'])->name('dimensoes.down')->middleware(['auth', 'verified']);
 
 Route::resource('indicadores', IndicadorController::class);
+Route::post('/indicadores/{id}/up', [IndicadorController::class, 'up'])->name('indicadores.up')->middleware(['auth', 'verified']);
+Route::post('/indicadores/{id}/down', [IndicadorController::class, 'down'])->name('indicadores.down')->middleware(['auth', 'verified']);
+
 Route::resource('criterios', CriterioController::class);
 Route::resource('avaliacoes', AvaliacaoController::class);
 Route::resource('evidencias', EvidenciaController::class);

@@ -71,9 +71,9 @@ class DimensaoController extends Controller
                                ->where('sequencia', $dimensao->sequencia+1)
                                ->first();
 
-        if ($dimensaoAnt){
-            $dimensao->sequencia = $dismensao->sequencia+1;
-            $dimensaoNext->sequencia = $dimensaoAnt->sequencia-1;
+        if ($dimensaoNext){
+            $dimensao->sequencia = $dimensao->sequencia+1;
+            $dimensaoNext->sequencia = $dimensaoNext->sequencia-1;
 
             if ($dimensao->save()){
                 if ($dimensaoNext->save()){
@@ -151,10 +151,12 @@ class DimensaoController extends Controller
     {
         $dimensao = dimensao::findOrFail($id);
 
+        $instrumento = $dimensao->id_instrumento;
+
         if ($dimensao->delete()) {
-            return redirect()->route('dimensoes.index')->with('success', 'Dimensão removida com sucesso!');
+            return redirect()->route('instrumentos.show', $instrumento)->with('success', 'Dimensão removida com sucesso!');
         }
 
-        return redirect()->route('dimensoes.index')->with('error', 'Erro ao remover a dimensão');
+        return redirect()->route('instrumentos.show', $instrumento)->with('error', 'Erro ao remover a dimensão');
     }
 }
