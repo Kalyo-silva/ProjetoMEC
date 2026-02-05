@@ -22,4 +22,8 @@ class indicador extends Model
         return $this->belongsTo(dimensao::class, 'id_dimensao');
     }
 
+    public function criterios(){
+        return $this->hasMany(criterio::class, 'id_indicador', 'id')->orderBy('sequencia');
+    }
+
 }

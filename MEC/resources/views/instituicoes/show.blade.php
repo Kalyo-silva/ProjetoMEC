@@ -17,7 +17,7 @@
                                 </a>
                             </div>
                             <div class="linkButton hover:text-red-500 hover:border-red-500">
-                                <a onclick='OpenModal()' class="flex">
+                                <a onclick='OpenModalDelete()' class="flex">
                                     <x-eva-trash-outline class="size-6"/>
                                     <p>Excluir</p>
                                 </a>

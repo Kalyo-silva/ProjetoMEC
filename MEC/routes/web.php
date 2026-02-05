@@ -41,6 +41,9 @@ Route::post('/indicadores/{id}/up', [IndicadorController::class, 'up'])->name('i
 Route::post('/indicadores/{id}/down', [IndicadorController::class, 'down'])->name('indicadores.down')->middleware(['auth', 'verified']);
 
 Route::resource('criterios', CriterioController::class);
+Route::post('/criterios/{id}/up', [CriterioController::class, 'up'])->name('criterios.up')->middleware(['auth', 'verified']);
+Route::post('/criterios/{id}/down', [CriterioController::class, 'down'])->name('criterios.down')->middleware(['auth', 'verified']);
+
 Route::resource('avaliacoes', AvaliacaoController::class);
 Route::resource('evidencias', EvidenciaController::class);
 

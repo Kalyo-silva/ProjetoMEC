@@ -5,7 +5,7 @@
                 <x-eva-trash-outline class="size-6 fill-red-400 mr-2"/>
                 <h1 class='text-xl font-bold border-b-2 w-fit border-indigo-400'>Confirmar exclusão</h1>
             </div>
-            <x-eva-close-outline class='size-6 fill-gray-400 cursor-pointer' onclick='closeModal()'/>
+            <x-eva-close-outline class='size-6 fill-gray-400 cursor-pointer' onclick='closeModalDelete()'/>
         </div>
         <p class='mt-6'>Você tem certeza que deseja excluir?</p>
         
@@ -24,7 +24,7 @@
                 </div>
             </form>
             <div class="linkButton hover:text-indigo-400 hover:border-indigo-400">
-                <a onclick='closeModal()' class="flex">
+                <a onclick='closeModalDelete()' class="flex">
                     <x-eva-undo-outline class="size-6" />
                     <p>Cancelar</p>
                 </a>
@@ -34,10 +34,10 @@
 </div>
 
 <script>
-    function closeModal(){
+    function closeModalDelete(){
         document.getElementById('modalConfirm').style.display='none';
     }
-    function OpenModal(){
+    function OpenModalDelete(){
         document.getElementById('modalConfirm').style.display='flex';
     }
 </script>

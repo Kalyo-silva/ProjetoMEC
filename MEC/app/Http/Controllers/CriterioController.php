@@ -44,7 +44,7 @@ class CriterioController extends Controller
         $validator = Validator::make($request->all(), [
             'id_indicador' => 'required|integer',
             'sequencia'    => 'required|integer|min:1',
-            'descricao'    => 'required|string|max:500'
+            'descricao_criterio'    => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -53,13 +53,18 @@ class CriterioController extends Controller
                 ->with('error', 'Dados inválidos, tente novamente.');
         }
 
-        $criterio = new criterio($request->all());
+        $criterio = new criterio();
+        $criterio->id_indicador = $request->input('id_indicador');
+        $criterio->sequencia = $request->input('sequencia');
+        $criterio->descricao = $request->input('descricao_criterio');
+
+        $indicador = $criterio->id_indicador;
 
         if ($criterio->save()) {
-            return redirect()->route('criterios.index')->with('success', 'Critério cadastrado com sucesso!');
+            return redirect()->route('indicadores.show', $indicador)->with('success', 'Critério cadastrado com sucesso!');
         }
 
-        return redirect()->route('criterios.index')->with('error', 'Erro ao cadastrar o critério');
+        return redirect()->route('indicadores.show', $indicador)->with('error', 'Erro ao cadastrar o critério');
     }
 
     public function edit(int $id)
@@ -106,4 +111,59 @@ class CriterioController extends Controller
 
         return redirect()->route('criterios.index')->with('error', 'Erro ao remover o critério');
     }
+
+
+
+
+    public function up($id){
+        $criterio = criterio::findOrFail($id);
+
+        $criterioAnt = criterio::where('id_indicador', $criterio->id_indicador)
+                               ->where('sequencia', $criterio->sequencia-1)
+                               ->first();
+
+        if ($criterioAnt){
+            $criterio->sequencia = $criterio->sequencia-1;
+            $criterioAnt->sequencia = $criterioAnt->sequencia+1;
+
+            if ($criterio->save()){
+                if ($criterioAnt->save()){
+                    return redirect()->route('indicadores.show', $criterio->id_indicador);
+                }
+
+                return redirect()->route('indicadores.show', $criterio->id_indicador)->with('error', 'Erro ao alterar a dimensão');
+            } 
+
+            return redirect()->route('indicadores.show', $criterio->id_indicador)->with('error', 'Erro ao alterar a dimensão');
+        }
+
+        return redirect()->route('indicadores.show', $criterio->id_indicador)->with('error', 'Erro ao alterar a dimensão');
+    }
+
+    public function down($id){
+        $criterio = criterio::findOrFail($id);
+
+        $criterioNext = criterio::where('id_indicador', $criterio->id_indicador)
+                               ->where('sequencia', $criterio->sequencia+1)
+                               ->first();
+
+        if ($criterioNext){
+            $criterio->sequencia = $criterio->sequencia+1;
+            $criterioNext->sequencia = $criterioNext->sequencia-1;
+
+            if ($criterio->save()){
+                if ($criterioNext->save()){
+                    return redirect()->route('indicadores.show', $criterio->id_indicador);
+                }
+
+                return redirect()->route('indicadores.show', $criterio->id_indicador)->with('error', 'Erro ao alterar a dimensão');
+            } 
+
+            return redirect()->route('indicadores.show', $criterio->id_indicador)->with('error', 'Erro ao alterar a dimensão');
+        }
+
+        return redirect()->route('indicadores.show', $criterio->id_indicador)->with('error', 'Erro ao alterar a dimensão');
+
+    }
+
 }

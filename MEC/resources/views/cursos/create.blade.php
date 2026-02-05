@@ -46,7 +46,7 @@
                             <button type="submit" class='linkButton hover:text-green-700 hover:border-green-700'>Salvar</button>
                             @if ($mode == 'edit' && isset($curso))
                                 <a href="{{route('cursos.index')}}" class='linkButton hover:text-red-700 hover:border-red-700'>Cancelar</a>
-                                <a onclick='OpenModal()' class='linkButton hover:text-red-700 hover:border-red-700'>Deletar</a>
+                                <a onclick='OpenModalDelete()' class='linkButton hover:text-red-700 hover:border-red-700'>Deletar</a>
                             @else
                                 <button type="reset" class='linkButton hover:text-red-700 hover:border-red-700'>Limpar</button>
                             @endif
