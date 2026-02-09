@@ -43,7 +43,6 @@ class IndicadorController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'id_dimensao' => 'required|integer',
-            'sequencia'   => 'required|integer|min:1',
             'descricao_indicador'   => 'required|string|max:500'
         ]);
 
@@ -56,7 +55,7 @@ class IndicadorController extends Controller
         $indicador = new indicador();
 
         $indicador->id_dimensao = $request->input('id_dimensao');
-        $indicador->sequencia = $request->input('sequencia');
+        $indicador->sequencia = indicador::max('sequencia')+1;
         $indicador->descricao = $request->input('descricao_indicador');
 
         if ($indicador->save()) {
@@ -104,11 +103,16 @@ class IndicadorController extends Controller
     {
         $indicador = indicador::findOrFail($id);
 
-        if ($indicador->delete()) {
-            return redirect()->route('indicadores.index')->with('success', 'Indicador removido com sucesso!');
-        }
+        if (count($indicador->criterios) == 0){
+            if ($indicador->delete()) {
+                return redirect()->route('dimensoes.show', $indicador->id_dimensao)->with('success', 'Indicador removido com sucesso!');
+            }
 
-        return redirect()->route('indicadores.index')->with('error', 'Erro ao remover o indicador');
+                return redirect()->route('dimensoes.show', $indicador->id_dimensao)->with('error', 'Erro ao remover o Indicador.');
+        } 
+        else {
+                return redirect()->route('dimensoes.show', $indicador->id_dimensao)->with('error', 'Erro ao remover o Indicador, ainda existem critérios vinculados.');
+        }
     }
 
 
@@ -129,13 +133,13 @@ class IndicadorController extends Controller
                     return redirect()->route('dimensoes.show', $indicador->id_dimensao);
                 }
 
-                return redirect()->route('dimensoes.show', $indicador->id_dimensao)->with('error', 'Erro ao alterar a dimensão');
+                return redirect()->route('dimensoes.show', $indicador->id_dimensao)->with('error', 'Erro ao alterar o Indicador');
             } 
 
-            return redirect()->route('dimensoes.show', $indicador->id_dimensao)->with('error', 'Erro ao alterar a dimensão');
+            return redirect()->route('dimensoes.show', $indicador->id_dimensao)->with('error', 'Erro ao alterar o Indicador');
         }
 
-        return redirect()->route('dimensoes.show', $indicador->id_dimensao)->with('error', 'Erro ao alterar a dimensão');
+        return redirect()->route('dimensoes.show', $indicador->id_dimensao)->with('error', 'Erro ao alterar o Indicador');
     }
 
     public function down($id){

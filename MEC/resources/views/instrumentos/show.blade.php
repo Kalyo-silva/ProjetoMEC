@@ -13,8 +13,8 @@
                             <h2 class='text-xl border-b-2 border-indigo-400 font-bold'>Detalhes do Instrumento</h2>
                         </div>
                         <div class="flex gap-2">
-                            <button class="border rounded px-2 py-1 border-red-500 text-red-500 flex gap-1 items-center">
-                                <x-eva-trash-outline class="size-5 text-red-500" />
+                            <button class="border rounded px-2 py-1 border-red-500 text-red-500 flex gap-1 items-center" onclick="OpenModalDelete()">
+                                <x-eva-trash-outline class="size-5 text-red-500"/>
                                 Excluir
                             </button>
                             <button onclick="OpenModal('edit')" class="border rounded px-2 py-1 border-indigo-400 text-indigo-400 flex gap-1 items-center">
@@ -124,11 +124,7 @@
             <div class='flex justify-between gap-4'>
                 <input type="hidden" value="{{$instrumento->id}}" id="id_instrumento" name="id_instrumento">
 
-                <div class='labeledInput w-2/12'>
-                    <label for='sequencia'>Sequencia</label>
-                    <input name='sequencia' id='sequencia' type='number' maxlength="3">
-                </div>
-                <div class='labeledInput w-10/12'>
+                <div class='labeledInput w-full'>
                     <label for='descricao'>Descrição</label>
                     <input name='descricao' id='descricao' type='text'>
                 </div>
@@ -139,4 +135,5 @@
         </form>
     </x-popup-new-instrumento>
 
+    <x-confirm-remove :id="$instrumento->id" :nome="$instrumento->titulo" :route="'instrumentos.destroy'"/>
 </x-app-layout>

@@ -94,7 +94,6 @@ class DimensaoController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'id_instrumento' => 'required|integer',
-            'sequencia'      => 'required|integer|min:1',
             'descricao'      => 'required|string|max:500'
         ]);
 
@@ -104,7 +103,10 @@ class DimensaoController extends Controller
                 ->with('error', 'Dados inválidos, tente novamente.');
         }
 
-        $dimensao = new dimensao($request->all());
+        $dimensao = new dimensao();
+        $dimensao->id_instrumento = $request->input('id_instrumento');
+        $dimensao->sequencia = dimensao::max('sequencia')+1;
+        $dimensao->descricao = $request->input('descricao');
 
         if ($dimensao->save()) {
             return redirect()->route('instrumentos.show', $dimensao->id_instrumento)->with('success', 'Dimensão cadastrada com sucesso!');
@@ -153,10 +155,17 @@ class DimensaoController extends Controller
 
         $instrumento = $dimensao->id_instrumento;
 
-        if ($dimensao->delete()) {
-            return redirect()->route('instrumentos.show', $instrumento)->with('success', 'Dimensão removida com sucesso!');
-        }
+        if (count($dimensao->indicadores) == 0){
 
-        return redirect()->route('instrumentos.show', $instrumento)->with('error', 'Erro ao remover a dimensão');
+            
+            if ($dimensao->delete()) {
+                return redirect()->route('instrumentos.show', $instrumento)->with('success', 'Dimensão removida com sucesso!');
+            }
+
+            return redirect()->route('instrumentos.show', $instrumento)->with('error', 'Erro ao remover a dimensão');
+        }
+        else {
+            return redirect()->route('instrumentos.show', $instrumento)->with('error', 'Erro ao remover a dimensão, ainda existem indicadores vinculados');
+        }
     }
 }

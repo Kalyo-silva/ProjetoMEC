@@ -130,12 +130,7 @@
         @csrf
             <div class='flex justify-between gap-4'>
                 <input type="hidden" value="{{$dimensao->id}}" id="id_dimensao" name="id_dimensao">
-
-                <div class='labeledInput w-2/12'>
-                    <label for='sequencia'>Sequencia</label>
-                    <input name='sequencia' id='sequencia' type='number' maxlength="3">
-                </div>
-                <div class='labeledInput w-10/12'>
+                <div class='labeledInput w-full'>
                     <label for='descricao_indicador'>Descrição</label>
                     <input name='descricao_indicador' id='descricao_indicador' type='text'>
                 </div>

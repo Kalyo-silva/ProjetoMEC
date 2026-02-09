@@ -35,7 +35,7 @@
                     <div class="mt-8">
                         <div class="flex gap-4 mb-4">
                             <div class="border rounded py-2 px-4 w-6/12">
-                                <a href="{{ route('dimensoes.show', $indicador->dimensao->instrumento->id) }}">
+                                <a href="{{ route('instrumentos.show', $indicador->dimensao->instrumento->id) }}">
                                     <p class="text-indigo-400 font-light flex items-center gap-1">
                                         <x-eva-clipboard-outline class="size-5 text-indigo-400"/>
                                         Instrumento
@@ -44,11 +44,13 @@
                                 </a>
                             </div>
                             <div class="border rounded py-2 px-4 w-6/12">
-                                <p class="text-indigo-400 font-light flex items-center gap-1">
-                                    <x-eva-cube-outline class="size-5 text-indigo-400" />
-                                    Dimensão
-                                </p>
-                                <p>{{$indicador->dimensao->sequencia}}. {{$indicador->dimensao->descricao}}</p>
+                                <a href="{{ route('dimensoes.show', $indicador->dimensao->id) }}">
+                                    <p class="text-indigo-400 font-light flex items-center gap-1">
+                                        <x-eva-cube-outline class="size-5 text-indigo-400" />
+                                        Dimensão
+                                    </p>
+                                    <p>{{$indicador->dimensao->sequencia}}. {{$indicador->dimensao->descricao}}</p>
+                                </a>
                             </div>
                         </div>
                         <div class="flex gap-4 mb-4">
@@ -81,7 +83,9 @@
                                                     
                                                     <td class="px-4 py-2 border-r w-1/12 text-center text-indigo-400 font-bold">{{$criterio->sequencia}}</td>
                                                     <td class="px-4 w-11/12">
-                                                        <p class="w-full">{{$criterio->descricao}}</p>
+                                                        <a class="w-full" href={{ route('criterios.show', $criterio->id) }}>
+                                                            <p class="w-full">{{$criterio->descricao}}</p>
+                                                        </a>
                                                     </td> 
                                                     <td class="px-4">
                                                         <div class="flex">
@@ -140,13 +144,9 @@
             <div class='flex flex-col justify-between'>
                 <input type="hidden" value="{{$indicador->id}}" id="id_indicador" name="id_indicador">
 
-                <div class='labeledInput w-2/12'>
-                    <label for='sequencia'>Sequencia</label>
-                    <input name='sequencia' id='sequencia' type='number' maxlength="3">
-                </div>
-                <div class='labeledInput w-10/12'>
+                <div class='labeledInput w-full'>
                     <label for='descricao_criterio'>Descrição</label>
-                    <textarea name='descricao_criterio' id='descricao_criterio' rows="20" cols="50"></textarea>
+                    <textarea name='descricao_criterio' id='descricao_criterio' class='rounded' rows="20" cols="100"></textarea>
                 </div>
             </div>
             <div class='flex items-center gap-4'>

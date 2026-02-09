@@ -9,11 +9,6 @@ use Validator;
 
 class CriterioController extends Controller
 {
-    public function index()
-    {
-        $listaCriterios = criterio::orderBy('sequencia', 'asc')->paginate(10);
-        return view('criterios.index', compact('listaCriterios'));
-    }
 
     public function show(int $id)
     {
@@ -43,7 +38,6 @@ class CriterioController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'id_indicador' => 'required|integer',
-            'sequencia'    => 'required|integer|min:1',
             'descricao_criterio'    => 'required'
         ]);
 
@@ -53,9 +47,11 @@ class CriterioController extends Controller
                 ->with('error', 'Dados inválidos, tente novamente.');
         }
 
+        $seq = criterio::max('sequencia')+1;
+
         $criterio = new criterio();
         $criterio->id_indicador = $request->input('id_indicador');
-        $criterio->sequencia = $request->input('sequencia');
+        $criterio->sequencia = $seq;
         $criterio->descricao = $request->input('descricao_criterio');
 
         $indicador = $criterio->id_indicador;
@@ -84,9 +80,7 @@ class CriterioController extends Controller
     public function update(Request $request, int $id)
     {
         $validator = Validator::make($request->all(), [
-            'id_indicador' => 'required|integer',
-            'sequencia'    => 'required|integer|min:1',
-            'descricao'    => 'required|string|max:500'
+            'descricao'    => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -96,9 +90,13 @@ class CriterioController extends Controller
         }
 
         $criterio = criterio::findOrFail($id);
-        $criterio->update($request->all());
+        $criterio->descricao = $request->input('descricao');
 
-        return redirect()->route('criterios.index')->with('success', 'Critério atualizado com sucesso!');
+        if ($criterio->save()) {
+            return redirect()->route('indicadores.show', $criterio->indicador)->with('success', 'Critério alterado com sucesso!');
+        }
+
+        return redirect()->route('indicadores.show', $criterio->indicador)->with('error', 'Erro ao alterar o critério');
     }
 
     public function destroy(int $id)
@@ -106,10 +104,10 @@ class CriterioController extends Controller
         $criterio = criterio::findOrFail($id);
 
         if ($criterio->delete()) {
-            return redirect()->route('criterios.index')->with('success', 'Critério removido com sucesso!');
+            return redirect()->route('indicadores.show', $criterio->indicador)->with('success', 'Critério removido com sucesso!');
         }
 
-        return redirect()->route('criterios.index')->with('error', 'Erro ao remover o critério');
+        return redirect()->route('indicadores.show', $criterio->indicador)->with('error', 'Erro ao remover o critério');
     }
 
 

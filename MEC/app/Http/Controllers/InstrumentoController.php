@@ -97,10 +97,15 @@ class InstrumentoController extends Controller
     {
         $instrumento = instrumento::findOrFail($id);
 
-        if ($instrumento->delete()) {
-            return redirect()->route('instrumentos.index')->with('success', 'Instrumento removido com sucesso!');
-        }
+        if (count($instrumento->dimensoes) == 0) {
+            if ($instrumento->delete()) {
+                return redirect()->route('instrumentos.index')->with('success', 'Instrumento removido com sucesso!');
+            }
 
-        return redirect()->route('instrumentos.index')->with('error', 'Erro ao remover o instrumento');
+            return redirect()->route('instrumentos.index')->with('error', 'Erro ao remover o instrumento');
+        }
+        else{
+            return redirect()->route('instrumentos.index')->with('error', 'Erro ao remover o instrumento, ainda existem dimensões vinculadas.');
+        }
     }
 }
