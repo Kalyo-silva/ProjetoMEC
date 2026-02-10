@@ -12,10 +12,16 @@
                             <x-eva-person-outline class="size-6 text-gray-400" />
                             <h2 class='text-xl border-b-2 border-indigo-400 font-bold'>Lista de Professores</h2>
                         </div>
-                        <a href="{{route('professores.create')}}" class="linkButton">
-                            <x-fas-plus class="size-6"/>
-                            <p>Novo</p>
-                        </a>
+                        <div class="flex gap-4">
+                            <form method='GET' action="{{ route('professores.index') }}" class="pl-2 flex gap-2 items-center border rounded border-gray-500 overflow-hidden">
+                                <x-eva-search-outline class="size-6 text-indigo-400 hover:text-gray-700 hover:cursor-pointer" onclick="this.parentElement.submit()"/>
+                                <input type="text" id='search' name='search' class="border-0" placeholder="Nome do Professor..." value="{{$search}}">
+                            </form>
+                            <a href="{{route('professores.create')}}" class="linkButton">
+                                <x-fas-plus class="size-6"/>
+                                <p>Novo</p>
+                            </a>
+                        </div>
                     </div>
 
                     @if($listaProfessores->isEmpty())

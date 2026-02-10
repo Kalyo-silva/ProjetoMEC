@@ -10,10 +10,20 @@ use Validator;
 
 class CursoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $listaCursos = curso::orderBy('nome', 'asc')->paginate(10);
-        return view('cursos.index', compact('listaCursos'));
+        $search = $request->input('search');
+
+        if ($search){
+            $listaCursos = curso::where('nome', 'ILIKE', '%'.$search.'%')
+                                ->orderBy('nome', 'asc')
+                                ->paginate(10);
+        }
+        else{
+            $listaCursos = curso::orderBy('nome', 'asc')->paginate(10);
+        }
+
+        return view('cursos.index', compact('listaCursos', 'search'));
     }
     
     public function create()

@@ -8,10 +8,21 @@ use Illuminate\Support\Facades\Validator;
 
 class MantenedorController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $listaMantenedores = mantenedor::with('instituicao')->orderBy('nome', 'asc')->paginate(10);
-        return view('mantenedor.index', compact('listaMantenedores'));
+        $search = $request->input('search');
+
+        if ($search){
+            $listaMantenedores = mantenedor::with('instituicao')
+                                            ->where('nome', 'ILIKE', '%'.$search.'%')
+                                            ->orderBy('nome', 'asc')
+                                            ->paginate(10);
+        }
+        else{
+            $listaMantenedores = mantenedor::with('instituicao')->orderBy('nome', 'asc')->paginate(10);
+        }
+
+        return view('mantenedor.index', compact('listaMantenedores', 'search'));
     }
 
     public function create()

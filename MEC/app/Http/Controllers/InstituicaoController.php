@@ -10,10 +10,20 @@ use Validator;
 
 class InstituicaoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $listaInstituicoes = instituicao::orderBy('nome', 'asc')->paginate(10);
-        return view('instituicoes.index', compact('listaInstituicoes'));
+        $search = $request->input('search');
+
+        if ($search){
+            $listaInstituicoes = instituicao::where('nome', 'ILIKE', '%'.$search.'%')
+                                            ->orWhere('sigla', 'ILIKE', "%{$search}%")
+                                            ->orderBy('nome', 'asc')
+                                            ->paginate(10);
+        }
+        else{
+            $listaInstituicoes = instituicao::orderBy('nome', 'asc')->paginate(10);    
+        }
+        return view('instituicoes.index', compact('listaInstituicoes', 'search'));
     }
 
     public function show(int $id)

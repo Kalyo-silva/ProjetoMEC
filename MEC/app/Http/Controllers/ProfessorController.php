@@ -8,10 +8,20 @@ use Validator;
 
 class ProfessorController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $listaProfessores = professor::orderBy('nome', 'asc')->paginate(10);
-        return view('professores.index', compact('listaProfessores'));
+        $search = $request->input('search');
+
+        if ($search){
+            $listaProfessores = professor::where('nome', 'ILIKE', '%'.$search.'%')
+                                            ->orderBy('nome', 'asc')
+                                            ->paginate(10);
+        }
+        else{
+            $listaProfessores = professor::orderBy('nome', 'asc')->paginate(10);    
+        }
+
+        return view('professores.index', compact('listaProfessores', 'search'));
     }
 
     public function create()
