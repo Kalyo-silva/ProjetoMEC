@@ -104,8 +104,18 @@ class DimensaoController extends Controller
         }
 
         $dimensao = new dimensao();
+
+        $sequencia = dimensao::where('id_instrumento', $request->input('id_instrumento'))->orderBy('sequencia', 'desc')->first();
+        
+        if ($sequencia == null){
+            $sequencia = 0;
+        } else{
+            $sequencia = $sequencia->sequencia;
+        }
+
+
         $dimensao->id_instrumento = $request->input('id_instrumento');
-        $dimensao->sequencia = dimensao::max('sequencia')+1;
+        $dimensao->sequencia = $sequencia+1;
         $dimensao->descricao = $request->input('descricao');
 
         if ($dimensao->save()) {

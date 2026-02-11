@@ -35,6 +35,16 @@ class InstrumentoController extends Controller
         return redirect()->route('instrumentos.index')->with('error', 'Instrumento não encontrado...');
     }
 
+    public function export(int $id){
+        $instrumento = instrumento::findOrFail($id);
+
+        if ($instrumento) {
+            return view('instrumentos.export', compact('instrumento'));
+        }
+
+        return redirect()->route('instrumentos.index')->with('error', 'Instrumento não encontrado...');
+    }
+
     public function create()
     {
         $mode = 'create';

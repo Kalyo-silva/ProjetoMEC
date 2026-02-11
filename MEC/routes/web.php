@@ -28,10 +28,12 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('mantenedores', MantenedorController::class)->middleware(['auth', 'verified']);
-Route::resource('instituicoes', InstituicaoController::class);
-Route::resource('professores', ProfessorController::class);
-Route::resource('cursos', CursoController::class);
-Route::resource('instrumentos', InstrumentoController::class);
+Route::resource('instituicoes', InstituicaoController::class)->middleware(['auth', 'verified']);;
+Route::resource('professores', ProfessorController::class)->middleware(['auth', 'verified']);;
+Route::resource('cursos', CursoController::class)->middleware(['auth', 'verified']);;
+Route::resource('instrumentos', InstrumentoController::class)->middleware(['auth', 'verified']);;
+Route::get('instrumentos/{id}/export', [InstrumentoController::class, 'export'])->name('instrumentos.export')->middleware(['auth', 'verified']);
+
 Route::resource('dimensoes', DimensaoController::class);
 Route::post('/dimensoes/{id}/up', [DimensaoController::class, 'up'])->name('dimensoes.up')->middleware(['auth', 'verified']);
 Route::post('/dimensoes/{id}/down', [DimensaoController::class, 'down'])->name('dimensoes.down')->middleware(['auth', 'verified']);

@@ -23,9 +23,15 @@
                                 
                             </button>
                             <button class="border rounded px-2 py-1 border-indigo-400 text-indigo-400">
+                                <a href="{{ route('instrumentos.export', $instrumento->id) }}" class="flex gap-1 items-center">
+                                    <x-eva-attach-2 class="size-5 text-indigo-400" />
+                                    Exportar
+                                </a>
+                            </button>
+                            <button class="border rounded px-2 py-1 border-indigo-400 text-indigo-400">
                                 <a href="{{ route('instrumentos.index') }}" class="flex gap-1 items-center">
                                     <x-eva-undo-outline class="size-5 text-indigo-400" />
-                                    voltar
+                                    Voltar
                                 </a>
                             </button>
                         </div>

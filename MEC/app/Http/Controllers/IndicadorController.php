@@ -54,8 +54,16 @@ class IndicadorController extends Controller
 
         $indicador = new indicador();
 
+        $sequencia = indicador::where('id_dimensao', $request->input('id_dimensao'))->orderBy('sequencia', 'desc')->first();
+        
+        if ($sequencia == null){
+            $sequencia = 0;
+        } else{
+            $sequencia = $sequencia->sequencia;
+        }
+
         $indicador->id_dimensao = $request->input('id_dimensao');
-        $indicador->sequencia = indicador::max('sequencia')+1;
+        $indicador->sequencia = $sequencia +1;
         $indicador->descricao = $request->input('descricao_indicador');
 
         if ($indicador->save()) {
