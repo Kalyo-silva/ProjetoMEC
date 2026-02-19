@@ -36,15 +36,15 @@
                         <x-eva-book-outline class="size-4 text-indigo-400" />
                         {{ __('Cursos') }}
                     </x-nav-link>
-                    
-                    <x-nav-link :href="route('professores.index')" :active="request()->routeIs('professores.index')" class="w-full items-center gap-1">
-                        <x-eva-award-outline class="size-4 text-indigo-400" />
-                        {{ __('Avaliações') }}
-                    </x-nav-link>
 
                     <x-nav-link :href="route('instrumentos.index')" :active="request()->routeIs('instrumentos.index')" class="w-full items-center gap-1">
                         <x-eva-clipboard-outline class="size-4 text-indigo-400" />
                         {{ __('Instrumentos') }}
+                    </x-nav-link>
+                    
+                    <x-nav-link :href="route('avaliacoes.index')" :active="request()->routeIs('avaliacoes.index')" class="w-full items-center gap-1">
+                        <x-eva-award-outline class="size-4 text-indigo-400" />
+                        {{ __('Avaliações') }}
                     </x-nav-link>
                 </div>
 

@@ -9,6 +9,7 @@ class avaliacao extends Model
     protected $table = 'avaliacao';
 
     protected $fillable = [
+        'id_instrumento',
         'id_curso',
         'ano',
         'descricao',
@@ -30,4 +31,8 @@ class avaliacao extends Model
         return $this->belongsTo(User::class, 'id_usuario');
     }
 
+    public function instrumento()
+    {
+        return $this->belongsTo(instrumento::class, 'id_instrumento');
+    }
 }

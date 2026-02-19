@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('avaliacao', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_instrumento')->references('id')->on('instrumento');
             $table->foreignId('id_curso')->references('id')->on('curso');
             $table->smallInteger('ano');
             $table->text('descricao');

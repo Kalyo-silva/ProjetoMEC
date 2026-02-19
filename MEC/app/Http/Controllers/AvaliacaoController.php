@@ -3,17 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Models\avaliacao;
+use App\Models\instrumento;
 use App\Models\curso;
 use App\Models\User; // Se estiver usando o modelo padrão do Laravel
 use Illuminate\Http\Request;
 use Validator;
+use Illuminate\Support\Facades\Auth;
 
 class AvaliacaoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $listaAvaliacoes = avaliacao::orderBy('ano', 'desc')->paginate(10);
-        return view('avaliacoes.index', compact('listaAvaliacoes'));
+        $search = $request->input('search');
+
+        if ($search){
+            $listaAvaliacoes = avaliacao::where('descricao', 'ILIKE', '%'.$search.'%')->orderBy('ano', 'desc')->paginate(10);
+        }
+        else{   
+            $listaAvaliacoes = avaliacao::orderBy('ano', 'desc')->paginate(10);
+        }
+
+        return view('avaliacoes.index', compact('listaAvaliacoes', 'search'));
     }
 
     public function show(int $id)
@@ -33,24 +43,24 @@ class AvaliacaoController extends Controller
 
         // Carrega relacionamentos para selects
         $listaCursos = curso::orderBy('nome')->get();
-        $listaUsuarios = User::orderBy('name')->get();
+        $listaInstrumentos = instrumento::orderBy('ano','desc')->get();
 
         return view('avaliacoes.create', compact(
             'mode',
             'listaCursos',
-            'listaUsuarios'
+            'listaInstrumentos'
         ));
     }
 
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id_curso'    => 'required|integer',
-            'ano'         => 'required|integer|min:1900|max:2100',
-            'descricao'   => 'nullable|string|max:500',
-            'data_inicio' => 'required|date',
-            'data_fim'    => 'required|date|after_or_equal:data_inicio',
-            'id_usuario'  => 'required|integer'
+            'id_instrumento' => 'required|integer',
+            'id_curso'       => 'required|integer',
+            'ano'            => 'required|integer|min:1900|max:2100',
+            'descricao'      => 'required|string|max:500',
+            'data_inicio'    => 'required|date',
+            'data_fim'       => 'required|date|after_or_equal:data_inicio',
         ]);
 
         if ($validator->fails()) {
@@ -59,7 +69,14 @@ class AvaliacaoController extends Controller
                 ->with('error', 'Dados inválidos, tente novamente.');
         }
 
-        $avaliacao = new avaliacao($request->all());
+        $avaliacao = new avaliacao();
+        $avaliacao->id_instrumento = $request->input('id_instrumento');
+        $avaliacao->id_curso = $request->input('id_curso');
+        $avaliacao->ano = $request->input('ano');
+        $avaliacao->descricao = $request->input('descricao');
+        $avaliacao->data_inicio = $request->input('data_inicio');
+        $avaliacao->data_fim = $request->input('data_fim');
+        $avaliacao->id_usuario = Auth::user()->id;
 
         if ($avaliacao->save()) {
             return redirect()->route('avaliacoes.index')->with('success', 'Avaliação cadastrada com sucesso!');
