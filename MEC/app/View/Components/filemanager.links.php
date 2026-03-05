@@ -6,19 +6,14 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class fileManager extends Component
+class filemanager_links extends Component
 {
-    public $listaArquivos;
-    public $listaTexto;
     public $listaLinks;
-
     /**
      * Create a new component instance.
      */
-    public function __construct($listaArquivos, $listaTexto, $listaLinks)
+    public function __construct($listaLinks)
     {
-        $this->listaArquivos = $listaArquivos;
-        $this->listaTexto = $listaTexto;
         $this->listaLinks = $listaLinks;
     }
 
@@ -27,6 +22,6 @@ class fileManager extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.file-manager');
+        return view('components.filemanager.links');
     }
 }

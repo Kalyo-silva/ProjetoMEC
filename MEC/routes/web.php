@@ -47,6 +47,8 @@ Route::post('/criterios/{id}/up', [CriterioController::class, 'up'])->name('crit
 Route::post('/criterios/{id}/down', [CriterioController::class, 'down'])->name('criterios.down')->middleware(['auth', 'verified']);
 
 Route::resource('avaliacoes', AvaliacaoController::class);
+
 Route::resource('evidencias', EvidenciaController::class);
+Route::post('/evidencias/store_link', [EvidenciaController::class, 'store_link'])->name('evidencias.store_link')->middleware(['auth', 'verified']);
 
 require __DIR__ . '/auth.php';

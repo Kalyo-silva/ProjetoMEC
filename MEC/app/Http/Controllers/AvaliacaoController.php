@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\avaliacao;
+use App\Models\evidencia;
 use App\Models\instrumento;
 use App\Models\curso;
 use App\Models\User; // Se estiver usando o modelo padrão do Laravel
@@ -29,9 +30,12 @@ class AvaliacaoController extends Controller
     public function show(int $id)
     {
         $avaliacao = avaliacao::findOrFail($id);
+        $listaArquivos = evidencia::whereNotNull('file_path')->orderBy('titulo', 'desc')->paginate(10);
+        $listaTexto = evidencia::whereNotNull('texto')->orderBy('ano', 'desc')->paginate(10);
+        $listaLinks = evidencia::whereNotNull('link')->orderBy('ano', 'desc')->paginate(10);
 
         if ($avaliacao) {
-            return view('avaliacoes.show', compact('avaliacao'));
+            return view('avaliacoes.show', compact('avaliacao', 'listaArquivos', 'listaTexto', 'listaLinks'));
         }
 
         return redirect()->route('avaliacoes.index')->with('error', 'Avaliação não encontrada...');

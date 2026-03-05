@@ -11,8 +11,9 @@ class EvidenciaController extends Controller
 {
     public function index()
     {
-        $listaEvidencias = evidencia::orderBy('ano', 'desc')->paginate(10);
-        return view('evidencias.index', compact('listaEvidencias'));
+        $listaArquivos = evidencia::whereNotNull('file_path')->orderBy('ano', 'desc')->paginate(10);
+        $listaTextos = evidencia::whereNotNull('texto')->orderBy('ano', 'desc')->paginate(10);
+        return view('evidencias.index', compact('listaArquivos', 'listaTextos'));
     }
 
     public function show(int $id)
@@ -67,6 +68,31 @@ class EvidenciaController extends Controller
         }
 
         return redirect()->route('evidencias.index')->with('error', 'Erro ao cadastrar a evidência');
+    }
+
+    public function store_link(Request $request){
+        $validator = Validator::make($request->all(), [
+            'link'      => 'nullable|url',
+        ]);
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->with('error', 'Link inválido, tente novamente.');
+        }
+
+        $evidencia = new evidencia();
+        $evidencia->titulo = $request->input('link');
+        $evidencia->ano = date('Y');
+        $evidencia->tipo = 1;
+        $evidencia->link = $request->input('link');
+
+        if ($evidencia->save()) {
+            return redirect()->route('avaliacoes.show', 1)->with('success', 'Evidência cadastrada com sucesso!');
+        }
+
+        return redirect()->route('avaliacoes.index')->with('error', 'Erro ao cadastrar a evidência');
+
     }
 
     public function edit(int $id)
