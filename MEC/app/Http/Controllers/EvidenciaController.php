@@ -72,7 +72,7 @@ class EvidenciaController extends Controller
 
     public function store_link(Request $request){
         $validator = Validator::make($request->all(), [
-            'link'      => 'nullable|url',
+            'link'      => 'required|url',
         ]);
 
         if ($validator->fails()) {
@@ -86,6 +86,32 @@ class EvidenciaController extends Controller
         $evidencia->ano = date('Y');
         $evidencia->tipo = 1;
         $evidencia->link = $request->input('link');
+
+        if ($evidencia->save()) {
+            return redirect()->route('avaliacoes.show', 1)->with('success', 'Evidência cadastrada com sucesso!');
+        }
+
+        return redirect()->route('avaliacoes.index')->with('error', 'Erro ao cadastrar a evidência');
+
+    }
+
+    public function store_text(Request $request){
+        $validator = Validator::make($request->all(), [
+            'titulo' => 'required|string|max:255',
+            'texto'   => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->with('error', 'Link inválido, tente novamente.');
+        }
+
+        $evidencia = new evidencia();
+        $evidencia->titulo = $request->input('titulo');
+        $evidencia->ano = date('Y');
+        $evidencia->tipo = 2;
+        $evidencia->texto = $request->input('texto');
 
         if ($evidencia->save()) {
             return redirect()->route('avaliacoes.show', 1)->with('success', 'Evidência cadastrada com sucesso!');

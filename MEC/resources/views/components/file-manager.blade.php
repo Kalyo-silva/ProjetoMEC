@@ -51,27 +51,33 @@
                     </nav>
                     <x-filemanager.files :listaArquivos="$listaArquivos"/>
                 </section>
-                <section class="border-t h-2/6 overflow-y-scroll" id = "TextSection">
+                <section class="border-t h-2/6 overflow-y-scroll flex flex-col" id = "TextSection">
                     <nav class="w-full px-4 py-2 border-b shadow-lg flex justify-between items-center bg-white">
                         <div class="flex gap-1 items-center">
                             <x-eva-book-outline class="size-5 text-indigo-500"/>
                             <p class="text-sm text-gray-500">Textos</p>
                         </div>
                         <div class="flex items-center">
-                            <x-eva-plus-outline class="size-5 text-indigo-500 cursor-pointer transition-all" onclick="openlinkForm(this, 'formText')"/>
+                            <x-eva-plus-outline class="size-5 text-indigo-500 cursor-pointer transition-all" onclick="openlinkForm(this, 'formText'); changeGridSize('textGrid', 2)"/>
                             <x-eva-arrow-up-outline class="size-5 text-indigo-500 cursor-pointer transition-all" onclick="expandTextSection(this)"/>
                         </div>
                     </nav>
-                    <div class="flex items-center">   
+                    <div class="flex items-start">   
 
                         <x-filemanager.texts :listaTexto="$listaTexto"/>
 
-                        <form action="" class="flex flex-col bg-white border rounded-lg m-4 overflow-hidden w-1/2">
-                            <textarea name="texto" id="texto" class="border-0 h-64"></textarea>
+                        <form action="{{ route('evidencias.store_text') }}" id='formText' method="POST" class="flex-col bg-white border rounded-lg m-4 overflow-hidden hidden">
+                            @csrf
+
+                            <input class="border-0 border-b border-gray-400 font-bold" type="text" name="titulo" placeholder="Titulo...">
+                        
+                            <textarea name="texto" id="texto" cols="100" rows="10" class="border-0"></textarea>
+ 
                             <button type='submit' class="px-2 bg-indigo-500 flex flex-row-reverse items-center">
                                 <x-eva-arrow-right-outline class="size-6 text-white cursor-pointer"/>
                                 <p class="text-sm text-white">Enviar</p>
                             </button>
+                        
                         </form>
 
                     </div>
@@ -100,6 +106,19 @@
         else{
             form.style.display = 'flex';
             button.style = 'transform: rotate(45deg);'
+        }
+    }
+
+    function changeGridSize(gridname, size){
+        grid = document.getElementById(gridname);
+
+        console.log(grid.style.gridTemplateColumns)
+
+        if (grid.style.gridTemplateColumns == 'repeat('+size+', minmax(0px, 1fr))'){
+            grid.style.gridTemplateColumns = '';
+        }
+        else{
+            grid.style.gridTemplateColumns = 'repeat('+size+', minmax(0, 1fr))';
         }
     }
 

@@ -47,11 +47,19 @@ class CriterioController extends Controller
                 ->with('error', 'Dados inválidos, tente novamente.');
         }
 
-        $seq = criterio::max('sequencia')+1;
+        $seq = criterio::where('id_indicador', $request->input('id_indicador'))->orderBy('sequencia', 'desc')->first();
+                
+        if ($seq == null){
+            $seq = 0;
+        } else{
+            $seq = $seq->sequencia;
+        }
+
+
 
         $criterio = new criterio();
         $criterio->id_indicador = $request->input('id_indicador');
-        $criterio->sequencia = $seq;
+        $criterio->sequencia = $seq + 1;
         $criterio->descricao = $request->input('descricao_criterio');
 
         $indicador = $criterio->id_indicador;
