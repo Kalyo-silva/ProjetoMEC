@@ -51,5 +51,6 @@ Route::resource('avaliacoes', AvaliacaoController::class);
 Route::resource('evidencias', EvidenciaController::class);
 Route::post('/evidencias/store_link', [EvidenciaController::class, 'store_link'])->name('evidencias.store_link')->middleware(['auth', 'verified']);
 Route::post('/evidencias/store_text', [EvidenciaController::class, 'store_text'])->name('evidencias.store_text')->middleware(['auth', 'verified']);
+Route::post('/evidencias/store_file', [EvidenciaController::class, 'store_file'])->name('evidencias.store_file')->middleware(['auth', 'verified']);
 
 require __DIR__ . '/auth.php';

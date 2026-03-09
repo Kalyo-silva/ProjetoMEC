@@ -30,7 +30,7 @@ class AvaliacaoController extends Controller
     public function show(int $id)
     {
         $avaliacao = avaliacao::findOrFail($id);
-        $listaArquivos = evidencia::whereNotNull('file_path')->orderBy('titulo', 'desc')->paginate(10);
+        $listaArquivos = evidencia::whereNotNull('file_path')->orderBy('titulo', 'desc')->paginate(50);
         $listaTexto = evidencia::whereNotNull('texto')->orderBy('ano', 'desc')->paginate(10);
         $listaLinks = evidencia::whereNotNull('link')->orderBy('ano', 'desc')->paginate(10);
 

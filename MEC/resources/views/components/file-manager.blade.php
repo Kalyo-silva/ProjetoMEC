@@ -50,8 +50,9 @@
                         </div>
                     </nav>
                     <x-filemanager.files :listaArquivos="$listaArquivos"/>
+                    
                 </section>
-                <section class="border-t h-2/6 overflow-y-scroll flex flex-col" id = "TextSection">
+                <section class="border-t h-2/6 overflow-y-scroll flex flex-col transition-all" id = "TextSection">
                     <nav class="w-full px-4 py-2 border-b shadow-lg flex justify-between items-center bg-white">
                         <div class="flex gap-1 items-center">
                             <x-eva-book-outline class="size-5 text-indigo-500"/>
@@ -90,6 +91,8 @@
                         <p class="text-sm text-gray-500">Detalhes</p>
                     </div>
                 </nav>
+
+                <x-filemanager.details/>
             </aside>
         </div>
     </div>

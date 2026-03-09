@@ -1,7 +1,8 @@
 @if (session('success'))
     <div id="ErrorContainer" class="flex mb-4 p-4 bg-green-100 text-green-800 rounded justify-between items-center">
         <p>{{ session('success') }}</p>
-        <p class="font-bold mr-2 cursor-pointer" onclick="closeContainer()">X</p>
+        
+        <x-eva-close-outline class='size-6 fill-gray-400 cursor-pointer' onclick="closeContainer()"/>
     </div>
 @elseif (session('error'))
     <div id="ErrorContainer" class="flex mb-4 p-4 bg-red-100 text-red-800 rounded justify-between items-center">

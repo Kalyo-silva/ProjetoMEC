@@ -33,41 +33,29 @@ class EvidenciaController extends Controller
         return view('evidencias.create', compact('mode'));
     }
 
-    public function store(Request $request)
+    public function store_file(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'titulo'    => 'required|string|max:255',
-            'ano'       => 'required|integer|min:1900|max:2100',
-            'tipo'      => 'required|string|max:50',
-            'file_path' => 'nullable|file|mimes:pdf,doc,docx,jpg,png',
-            'link'      => 'nullable|url',
-            'texto'     => 'nullable|string|max:1000',
+            'file_path' => 'required|file'
         ]);
-
-        if ($validator->fails()) {
-            return back()
-                ->withErrors($validator)
-                ->with('error', 'Dados inválidos, tente novamente.');
-        }
-
         $evidencia = new evidencia();
-        $evidencia->titulo = $request->input('titulo');
-        $evidencia->ano = $request->input('ano');
-        $evidencia->tipo = $request->input('tipo');
-        $evidencia->link = $request->input('link');
-        $evidencia->texto = $request->input('texto');
 
-        if ($file = $request->file('file_path')) {
+        $file = $request->file('file_path');
+        
+        if ($file) {
+            $evidencia->titulo = $file->getClientOriginalName();
+            $evidencia->ano = date('Y');
+            $evidencia->tipo = 2;
             $filename = date('YmdHis') . '_' . $file->getClientOriginalName();
             $file->move(public_path('uploads_evidencias'), $filename);
             $evidencia->file_path = $filename;
         }
 
         if ($evidencia->save()) {
-            return redirect()->route('evidencias.index')->with('success', 'Evidência cadastrada com sucesso!');
+            return redirect()->route('avaliacoes.show', 1)->with('success', 'Evidência cadastrada com sucesso!');
         }
 
-        return redirect()->route('evidencias.index')->with('error', 'Erro ao cadastrar a evidência');
+        return redirect()->route('avaliacoes.index')->with('error', 'Erro ao cadastrar a evidência');
     }
 
     public function store_link(Request $request){
