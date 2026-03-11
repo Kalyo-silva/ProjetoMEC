@@ -6,14 +6,15 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class filemanager_details extends Component
-{
+class filemanager_files extends Component
+{   
+    public $Arquivos;
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($Arquivos)
     {
-        //
+        $this->Arquivos = $Arquivos;
     }
 
     /**
@@ -21,6 +22,6 @@ class filemanager_details extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.filemanager.details');
+        return view('components.filemanager.files');
     }
 }

@@ -6,19 +6,16 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class confirmRemove extends Component
+class filemanager_details extends Component
 {
-    public $id;    
-    public $nome;
-    public $route;
+    public $file;
+
     /**
      * Create a new component instance.
      */
-    public function __construct($id, $nome, $route)
+    public function __construct($file)
     {
-        $this->id = $id;
-        $this->nome = $nome;
-        $this->route = $route;
+        $this->file = $file;
     }
 
     /**
@@ -26,6 +23,6 @@ class confirmRemove extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.confirm-remove');
+        return view('components.filemanager.details');
     }
 }

@@ -7,30 +7,39 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Validator;
 
+use App\View\Components\filemanager_files;
+use App\View\Components\filemanager_details;
+
 class EvidenciaController extends Controller
 {
-    public function index()
-    {
-        $listaArquivos = evidencia::whereNotNull('file_path')->orderBy('ano', 'desc')->paginate(10);
-        $listaTextos = evidencia::whereNotNull('texto')->orderBy('ano', 'desc')->paginate(10);
-        return view('evidencias.index', compact('listaArquivos', 'listaTextos'));
+    public function files(){
+        $listaArquivos = evidencia::whereNotNull('file_path')->where('tipo', 6)->orderBy('titulo', 'desc')->paginate(10);
+        $listaImagens = evidencia::whereNotNull('file_path')->where('tipo', 3)->orderBy('titulo', 'desc')->paginate(10);
+        $listaAudios = evidencia::whereNotNull('file_path')->where('tipo', 4)->orderBy('titulo', 'desc')->paginate(10);
+        $listaVideos = evidencia::whereNotNull('file_path')->where('tipo', 5)->orderBy('titulo', 'desc')->paginate(10);
+
+        $arquivos = array(
+            "arquivos" => $listaArquivos,
+            "imagens" => $listaImagens,
+            "audios" => $listaAudios,
+            "videos" => $listaVideos
+        );
+
+        $obj = new filemanager_files($arquivos);
+
+        return $obj->render()->with($obj->data());
     }
 
-    public function show(int $id)
-    {
+    public function details(int $id){
         $evidencia = evidencia::findOrFail($id);
 
-        if ($evidencia) {
-            return view('evidencias.show', compact('evidencia'));
+        if ($evidencia){
+            $obj = new filemanager_details($evidencia);
+            return $obj->render()->with($obj->data());
         }
-
-        return redirect()->route('evidencias.index')->with('error', 'Evidência não encontrada...');
-    }
-
-    public function create()
-    {
-        $mode = 'create';
-        return view('evidencias.create', compact('mode'));
+        else{
+            return back()->with('error', 'Evidência Não Encontrada, tente novamente.');
+        }
     }
 
     public function store_file(Request $request)
@@ -45,17 +54,30 @@ class EvidenciaController extends Controller
         if ($file) {
             $evidencia->titulo = $file->getClientOriginalName();
             $evidencia->ano = date('Y');
-            $evidencia->tipo = 2;
             $filename = date('YmdHis') . '_' . $file->getClientOriginalName();
+            
+            if (in_array(pathinfo($filename, PATHINFO_EXTENSION), ['png','jpg','jpeg'])){
+                $evidencia->tipo = 3;
+            }
+            else if (in_array(pathinfo($filename, PATHINFO_EXTENSION), ['mp3'])){
+                $evidencia->tipo = 4;
+            }
+            else if (in_array(pathinfo($filename, PATHINFO_EXTENSION), ['mp4', 'avi'])){
+                $evidencia->tipo = 5;
+            }
+            else {
+                $evidencia->tipo = 6;
+            }
+
             $file->move(public_path('uploads_evidencias'), $filename);
             $evidencia->file_path = $filename;
         }
 
         if ($evidencia->save()) {
-            return redirect()->route('avaliacoes.show', 1)->with('success', 'Evidência cadastrada com sucesso!');
+            return redirect()->back()->with('success', 'Evidência cadastrada com sucesso!');
         }
 
-        return redirect()->route('avaliacoes.index')->with('error', 'Erro ao cadastrar a evidência');
+        return redirect()->back()->with('error', 'Erro ao cadastrar a evidência');
     }
 
     public function store_link(Request $request){

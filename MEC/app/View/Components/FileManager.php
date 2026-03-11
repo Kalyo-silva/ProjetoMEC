@@ -6,18 +6,16 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class fileManager extends Component
+class FileManager extends Component
 {
-    public $listaArquivos;
     public $listaTexto;
     public $listaLinks;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($listaArquivos, $listaTexto, $listaLinks)
+    public function __construct($listaTexto, $listaLinks)
     {
-        $this->listaArquivos = $listaArquivos;
         $this->listaTexto = $listaTexto;
         $this->listaLinks = $listaLinks;
     }

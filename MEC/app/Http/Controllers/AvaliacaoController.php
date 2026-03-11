@@ -30,12 +30,12 @@ class AvaliacaoController extends Controller
     public function show(int $id)
     {
         $avaliacao = avaliacao::findOrFail($id);
-        $listaArquivos = evidencia::whereNotNull('file_path')->orderBy('titulo', 'desc')->paginate(50);
+
         $listaTexto = evidencia::whereNotNull('texto')->orderBy('ano', 'desc')->paginate(10);
         $listaLinks = evidencia::whereNotNull('link')->orderBy('ano', 'desc')->paginate(10);
 
         if ($avaliacao) {
-            return view('avaliacoes.show', compact('avaliacao', 'listaArquivos', 'listaTexto', 'listaLinks'));
+            return view('avaliacoes.show', compact('avaliacao', 'listaTexto', 'listaLinks', ));
         }
 
         return redirect()->route('avaliacoes.index')->with('error', 'Avaliação não encontrada...');
@@ -94,14 +94,15 @@ class AvaliacaoController extends Controller
         $mode = 'edit';
         $avaliacao = avaliacao::findOrFail($id);
 
+        // Carrega relacionamentos para selects
         $listaCursos = curso::orderBy('nome')->get();
-        $listaUsuarios = User::orderBy('name')->get();
+        $listaInstrumentos = instrumento::orderBy('ano','desc')->get();
 
         return view('avaliacoes.create', compact(
             'mode',
             'avaliacao',
             'listaCursos',
-            'listaUsuarios'
+            'listaInstrumentos'
         ));
     }
 

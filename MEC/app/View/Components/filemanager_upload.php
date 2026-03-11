@@ -6,15 +6,14 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class popupNewInstrumento extends Component
+class filemanager_upload extends Component
 {
-    public $title;
-    public $id;
-
-    public function __construct($title, $id)
+    /**
+     * Create a new component instance.
+     */
+    public function __construct()
     {
-        $this->title = $title;
-        $this->id = $id;
+        //
     }
 
     /**
@@ -22,6 +21,6 @@ class popupNewInstrumento extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.popup-new-instrumento');
+        return view('components.filemanager.upload');
     }
 }

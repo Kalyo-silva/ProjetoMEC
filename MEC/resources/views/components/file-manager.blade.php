@@ -1,8 +1,9 @@
+
 <div class="flex w-full h-full bg-black fixed top-0 left-0 bg-opacity-40 p-4"> <!-- dark Bg -->
     <div class="flex flex-col w-full h-full bg-white rounded shadow-lg">
         <header class="w-full h-fit border-b px-4 py-2 flex justify-between items-center">
             <p class="text-gray-500">Gerenciador de Arquivos</p>
-            <x-eva-close-outline class='size-6 fill-gray-400 cursor-pointer' onclick="closeModal('')"/>
+            <x-eva-close-outline class='size-6 fill-gray-400 cursor-pointer' onclick="closeModal()"/>
         </header>
         <x-popup-message-handler/>
         <div class="flex w-full h-full bg-gray-100">
@@ -35,7 +36,7 @@
                 </div>
             </aside>
             <main class="w-8/12 flex flex-col">
-                <section class="h-4/6 overflow-hidden" id="FilesSection">
+                <section class="h-4/6 overflow-hidden flex flex-col" id="FilesSection">
                     <nav class="w-full px-4 py-2 flex justify-between border-b shadow-lg bg-white">
                         <div class="flex gap-1 items-center">
                             <x-eva-file-text-outline class="size-5 text-indigo-500"/>
@@ -49,8 +50,9 @@
                             <x-filemanager.upload/>
                         </div>
                     </nav>
-                    <x-filemanager.files :listaArquivos="$listaArquivos"/>
-                    
+                    <div id="containerFiles" class="overflow-y-scroll">
+
+                    </div>
                 </section>
                 <section class="border-t h-2/6 overflow-y-scroll flex flex-col transition-all" id = "TextSection">
                     <nav class="w-full px-4 py-2 border-b shadow-lg flex justify-between items-center bg-white">
@@ -84,19 +86,23 @@
                     </div>
                 </section>
             </main>
-            <aside class="w-2/12 border-l">
+            <aside class="w-2/12 border-l flex flex-col">
                 <nav class="w-full px-4 py-2 border-b shadow-lg bg-white">
                     <div class="flex gap-1 items-center">
                         <x-eva-list-outline class="size-5 text-indigo-500"/>
                         <p class="text-sm text-gray-500">Detalhes</p>
                     </div>
                 </nav>
+                <div id="containerDetails" class="h-full">
 
-                <x-filemanager.details/>
+                </div>
             </aside>
         </div>
     </div>
 </div>
+
+<script src="{{ asset('js/request.js') }}">
+</script>
 
 <script>
     function openlinkForm(button, formname){
@@ -140,4 +146,13 @@
             button.style = 'transform: rotate(0deg);'
         }
     }
+    function loadFiles(){
+        document.getElementById('containerFiles').innerHTML = request('http://127.0.0.1:8000/evidencias/files', 'GET');
+    }
+
+    function detail(id){
+        document.getElementById('containerDetails').innerHTML = request('http://127.0.0.1:8000/evidencias/'+id+'/details', 'GET');
+    }
+
+    loadFiles()
 </script>
