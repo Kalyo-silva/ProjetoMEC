@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\File;
 use Validator;
 
 use App\View\Components\filemanager_files;
+use App\View\Components\filemanager_links;
+use App\View\Components\filemanager_texts;
 use App\View\Components\filemanager_details;
 
 class EvidenciaController extends Controller
@@ -29,6 +31,23 @@ class EvidenciaController extends Controller
 
         return $obj->render()->with($obj->data());
     }
+
+    public function links(){
+        $listaLinks = evidencia::whereNotNull('link')->orderBy('ano', 'desc')->paginate(10);
+
+        $obj = new filemanager_links($listaLinks);
+
+        return $obj->render()->with($obj->data());
+    }
+
+    public function Texts(){
+        $listaTextos = evidencia::whereNotNull('texto')->orderBy('ano', 'desc')->paginate(10);
+
+        $obj = new filemanager_texts($listaTextos);
+
+        return $obj->render()->with($obj->data());
+    }
+
 
     public function details(int $id){
         $evidencia = evidencia::findOrFail($id);
@@ -52,7 +71,7 @@ class EvidenciaController extends Controller
         $file = $request->file('file_path');
         
         if ($file) {
-            $evidencia->titulo = $file->getClientOriginalName();
+            $evidencia->titulo = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $evidencia->ano = date('Y');
             $filename = date('YmdHis') . '_' . $file->getClientOriginalName();
             
@@ -192,9 +211,9 @@ class EvidenciaController extends Controller
         }
 
         if ($evidencia->delete()) {
-            return redirect()->route('evidencias.index')->with('success', 'Evidência removida com sucesso!');
+            return redirect()->back()->with('success', 'Evidência removida com sucesso!');
         }
 
-        return redirect()->route('evidencias.index')->with('error', 'Erro ao remover a evidência');
+        return redirect()->back()->with('error', 'Erro ao remover a evidência');
     }
 }

@@ -5,7 +5,7 @@
         </div>
     @else
         @foreach ($listaTexto as $text)
-        <div class="flex flex-col border rounded-lg shadow-lg bg-white max-h-96 overflow-y-scroll cursor-pointer">
+        <div class="flex flex-col border rounded-lg shadow-lg bg-white max-h-96 overflow-y-scroll cursor-pointer" onclick="detail({{$text->id}})">
             <p class="font-bold border-b px-4 py-2">{{$text->titulo}}</p>
             <pre class="text-justify px-4 py-2 whitespace-pre-line font-sans">{{$text->texto}}</pre>      
         </div>

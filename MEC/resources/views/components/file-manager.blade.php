@@ -1,9 +1,9 @@
 
-<div class="flex w-full h-full bg-black fixed top-0 left-0 bg-opacity-40 p-4"> <!-- dark Bg -->
-    <div class="flex flex-col w-full h-full bg-white rounded shadow-lg">
+<div id='fileManager_container' class="flex w-full h-full bg-black fixed top-0 left-0 bg-opacity-40 p-4"> <!-- dark Bg -->
+    <div class="flex flex-col w-full h-full bg-white rounded shadow-lg  overflow-y-scroll">
         <header class="w-full h-fit border-b px-4 py-2 flex justify-between items-center">
             <p class="text-gray-500">Gerenciador de Arquivos</p>
-            <x-eva-close-outline class='size-6 fill-gray-400 cursor-pointer' onclick="closeModal()"/>
+            <x-eva-close-outline class='size-6 fill-gray-400 cursor-pointer' onclick="closeModal('fileManager_container')"/>
         </header>
         <x-popup-message-handler/>
         <div class="flex w-full h-full bg-gray-100">
@@ -31,8 +31,9 @@
                             <x-eva-arrow-right-outline class="size-6 text-white cursor-pointer"/>
                         </button>
                     </form>
+                    <div id="containerLinks" class="overflow-y-scroll">
 
-                    <x-filemanager.links :listaLinks="$listaLinks"/>
+                    </div>
                 </div>
             </aside>
             <main class="w-8/12 flex flex-col">
@@ -66,8 +67,9 @@
                         </div>
                     </nav>
                     <div class="flex items-start">   
+                        <div id="containerTexts" class="overflow-y-scroll">
 
-                        <x-filemanager.texts :listaTexto="$listaTexto"/>
+                        </div>
 
                         <form action="{{ route('evidencias.store_text') }}" id='formText' method="POST" class="flex-col bg-white border rounded-lg m-4 overflow-hidden hidden">
                             @csrf
@@ -150,9 +152,29 @@
         document.getElementById('containerFiles').innerHTML = request('http://127.0.0.1:8000/evidencias/files', 'GET');
     }
 
+    function loadLinks(){
+        document.getElementById('containerLinks').innerHTML = request('http://127.0.0.1:8000/evidencias/links', 'GET');
+    }
+
+    function loadTexts(){
+        document.getElementById('containerTexts').innerHTML = request('http://127.0.0.1:8000/evidencias/texts', 'GET');
+    }
+
     function detail(id){
         document.getElementById('containerDetails').innerHTML = request('http://127.0.0.1:8000/evidencias/'+id+'/details', 'GET');
     }
 
-    loadFiles()
+    function reloadAll(){
+        loadFiles()
+        loadLinks()
+        loadTexts()
+    }
+
+
+    function closeModal(id){
+        document.getElementById(id).style.display='none';
+    }
+
+    reloadAll()
+
 </script>
