@@ -62,7 +62,7 @@
                             <p class="text-sm text-gray-500">Textos</p>
                         </div>
                         <div class="flex items-center">
-                            <x-eva-plus-outline class="size-5 text-indigo-500 cursor-pointer transition-all" onclick="openlinkForm(this, 'formText'); changeGridSize('textGrid', 2)"/>
+                            <x-eva-plus-outline class="size-5 text-indigo-500 cursor-pointer transition-all" onclick="openlinkForm(this, 'formText'); changeGridSize('textGrid')"/>
                             <x-eva-arrow-up-outline class="size-5 text-indigo-500 cursor-pointer transition-all" onclick="expandTextSection(this)"/>
                         </div>
                     </nav>
@@ -120,16 +120,24 @@
         }
     }
 
-    function changeGridSize(gridname, size){
+    function changeGridSize(gridname){
         grid = document.getElementById(gridname);
 
-        console.log(grid.style.gridTemplateColumns)
 
-        if (grid.style.gridTemplateColumns == 'repeat('+size+', minmax(0px, 1fr))'){
-            grid.style.gridTemplateColumns = '';
+        
+        console.log(grid.style.gridTemplateColumns)
+        size = grid.style.gridTemplateColumns.replace('repeat(', '');
+        size = size.replace(', minmax(0px, 1fr))', '');
+
+        console.log(size);
+
+        if (grid.style.gridTemplateColumns == 'repeat('+(size-1)+', minmax(0px, 1fr))'){
+            grid.style.gridTemplateColumns = 'repeat('+(size)+', minmax(0px, 1fr))';
+            document.getElementById('containerTexts').style.width = '100%';
         }
         else{
-            grid.style.gridTemplateColumns = 'repeat('+size+', minmax(0, 1fr))';
+            grid.style.gridTemplateColumns = 'repeat('+(size-1)+', minmax(0, 1fr))';
+            document.getElementById('containerTexts').style.width = '50%';
         }
     }
 
@@ -152,8 +160,8 @@
         document.getElementById('containerFiles').innerHTML = request('http://127.0.0.1:8000/evidencias/files', 'GET');
     }
 
-    function loadLinks(){
-        document.getElementById('containerLinks').innerHTML = request('http://127.0.0.1:8000/evidencias/links', 'GET');
+    function loadLinks(size = 0){
+        document.getElementById('containerLinks').innerHTML = request('http://127.0.0.1:8000/evidencias/links/'+size, 'GET');
     }
 
     function loadTexts(){
@@ -169,7 +177,6 @@
         loadLinks()
         loadTexts()
     }
-
 
     function closeModal(id){
         document.getElementById(id).style.display='none';

@@ -32,10 +32,12 @@ class EvidenciaController extends Controller
         return $obj->render()->with($obj->data());
     }
 
-    public function links(){
-        $listaLinks = evidencia::whereNotNull('link')->orderBy('ano', 'desc')->paginate(10);
+    public function links($size = 0){
+        $newSize = $size + 5;
 
-        $obj = new filemanager_links($listaLinks);
+        $listaLinks = evidencia::whereNotNull('link')->orderBy('ano', 'desc')->take($newSize)->get();
+        
+        $obj = new filemanager_links($listaLinks, evidencia::whereNotNull('link')->count());
 
         return $obj->render()->with($obj->data());
     }
@@ -140,7 +142,7 @@ class EvidenciaController extends Controller
         $evidencia->titulo = $request->input('titulo');
         $evidencia->ano = date('Y');
         $evidencia->tipo = 2;
-        $evidencia->texto = $request->input('texto');
+        $evidencia->textAvaliaçãoo = $request->input('texto');
 
         if ($evidencia->save()) {
             return redirect()->route('avaliacoes.show', 1)->with('success', 'Evidência cadastrada com sucesso!');

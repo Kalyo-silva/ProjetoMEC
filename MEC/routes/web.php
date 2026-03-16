@@ -49,7 +49,7 @@ Route::post('/criterios/{id}/down', [CriterioController::class, 'down'])->name('
 Route::resource('avaliacoes', AvaliacaoController::class);
 
 Route::get('/evidencias/files', [EvidenciaController::class, 'files'])->name('evidencias.files')->middleware(['auth', 'verified']);
-Route::get('/evidencias/links', [EvidenciaController::class, 'links'])->name('evidencias.links')->middleware(['auth', 'verified']);
+Route::get('/evidencias/links/{size}', [EvidenciaController::class, 'links'])->name('evidencias.links')->middleware(['auth', 'verified']);
 Route::get('/evidencias/texts', [EvidenciaController::class, 'texts'])->name('evidencias.texts')->middleware(['auth', 'verified']);
 Route::get('/evidencias/{id}/details', [EvidenciaController::class, 'details'])->name('evidencias.details')->middleware(['auth', 'verified']);
 

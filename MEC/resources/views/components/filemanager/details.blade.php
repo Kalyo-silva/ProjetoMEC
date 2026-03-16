@@ -57,8 +57,9 @@
                 </div>
                 <p>Arquivo .{{pathinfo($file->file_path, PATHINFO_EXTENSION);}}</p>
             </div>
-            <a href={{ asset('uploads_evidencias/'.$file->file_path) }} download="{{ $file->titulo }}" class="w-full px-4 py-2 bg-indigo-500 border rounded-lg shadow-lg text-white text-center">
-                Download
+            <a href={{ asset('uploads_evidencias/'.$file->file_path) }} download="{{ $file->titulo }}" class="flex gap-1 w-full px-4 py-2 bg-indigo-500 border rounded-lg shadow-lg text-white items-center justify-center">
+                <x-eva-download-outline class="size-6 text-white"/>
+                <p>Download</p>
             </a>
         @endif
         <form class="flex gap-1 px-4 py-2 flex-row justify-center items-center cursor-pointer" action="{{ route('evidencias.destroy', $file->id) }}" method="POST" onclick="this.submit()">
