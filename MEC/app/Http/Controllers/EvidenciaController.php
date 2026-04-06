@@ -142,7 +142,7 @@ class EvidenciaController extends Controller
         $evidencia->titulo = $request->input('titulo');
         $evidencia->ano = date('Y');
         $evidencia->tipo = 2;
-        $evidencia->textAvaliaçãoo = $request->input('texto');
+        $evidencia->texto = $request->input('texto');
 
         if ($evidencia->save()) {
             return redirect()->route('avaliacoes.show', 1)->with('success', 'Evidência cadastrada com sucesso!');

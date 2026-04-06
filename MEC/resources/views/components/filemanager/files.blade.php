@@ -1,4 +1,4 @@
-<div class="w-full flex flex-col gap-4 justify-start items-start p-8">
+<div class="w-full flex flex-col gap-4 justify-start items-start px-4 py-2">
     @if (!$Arquivos['arquivos'] && !$Arquivos['imagens'] && !$Arquivos['audios'] && !$Arquivos['videos'])
         <div class="flex items-center justify-center w-full h-full">
             <p class="text-gray-500">Nenhum Arquivo Encontrado...</p>

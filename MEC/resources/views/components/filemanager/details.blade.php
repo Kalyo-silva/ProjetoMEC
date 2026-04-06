@@ -21,7 +21,7 @@
                     <x-eva-file-outline class='size-6 text-indigo-500'/>
                     <p class="text-gray-500">Documento</p>
                 </div>
-                <p>{{$file->titulo}}</p>
+                <p class="text-indigo-500 truncate">{{$file->titulo}}</p>
             </div>
         @elseif ($file->tipo == 1)
             <div class="px-4 py-2 bg-white border rounded-lg shadow-lg overflow-hidden">
@@ -32,9 +32,9 @@
                 <a href="{{ $file->link }}" target="_blank"><p class="underline text-indigo-500 truncate text-ellipsis">{{$file->titulo}}</p></a>
             </div>
         @elseif ($file->tipo == 2)
-            <div class="overflow-y-scroll bg-white border rounded-lg shadow-lg flex flex-col">
-                <p class="text-lg font-bold bg-white border-b px-4 py-2">{{$file->titulo}}</p>
-                <pre class="px-4 py-2 whitespace-pre-line font-sans text-justify h-full">{{$file->texto}}</pre>
+            <div class="overflow-y-scroll bg-white border rounded-lg shadow-lg flex flex-col max-2xl:max-h-80 max-h-96">
+                <p class="text-lg font-bold bg-white border-b px-4 py-2 max-2xl:text-sm">{{$file->titulo}}</p>
+                <pre class="px-4 py-2 whitespace-pre-line font-sans text-justify h-full max-2xl:text-sm">{{$file->texto}}</pre>
             </div>
         @endif
 
