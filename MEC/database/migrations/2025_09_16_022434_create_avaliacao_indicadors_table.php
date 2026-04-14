@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('avaliacao_indicador', function (Blueprint $table) {
             $table->id();
+            $table->integer('nota');
             $table->foreignId('id_avaliacao')->references('id')->on('avaliacao');
             $table->foreignId('id_indicador')->references('id')->on('indicador');
             $table->timestamp('data_criacao');

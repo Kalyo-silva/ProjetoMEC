@@ -1,5 +1,5 @@
 <!--dark bg-->
-<div class="w-full h-full bg-black bg-opacity-40 fixed left-0 top-0 p-4">
+<div class="w-full h-full bg-black bg-opacity-40 fixed left-0 top-0 p-4 hidden" id="fileManager_container">
     <!--Main Container-->
     <div class="w-full h-full bg-white rounded-lg flex flex-col overflow-hidden">
         <!--Header-->
@@ -112,6 +112,10 @@
 <script src="{{ asset('js/request.js') }}"></script>
 
 <script>
+    function closeModal(id){
+        document.getElementById(id).style.display='none';
+    }
+
     function openlinkForm(button, formname){
         form = document.getElementById(formname);
 
@@ -146,8 +150,8 @@
         document.getElementById('containerDetails').innerHTML = request('http://127.0.0.1:8000/evidencias/'+id+'/details', 'GET');
     }
 
-    function loadTexts(){
-        document.getElementById('containerTexts').innerHTML = request('http://127.0.0.1:8000/evidencias/texts', 'GET');
+    function loadTexts(size = 0){
+        document.getElementById('containerTexts').innerHTML = request('http://127.0.0.1:8000/evidencias/texts/'+size, 'GET');
     }
 
     function expandTextSection(button){

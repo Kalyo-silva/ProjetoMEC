@@ -9,12 +9,14 @@ use Illuminate\View\Component;
 class filemanager_texts extends Component
 {
     public $listaTexto;
+    public $totalTextos;
     /**
      * Create a new component instance.
      */
-    public function __construct($listaTexto)
+    public function __construct($listaTexto, $totalTextos)
     {
         $this->listaTexto = $listaTexto;
+        $this->totalTextos = $totalTextos;
     }
 
     /**

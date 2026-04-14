@@ -47,10 +47,11 @@ Route::post('/criterios/{id}/up', [CriterioController::class, 'up'])->name('crit
 Route::post('/criterios/{id}/down', [CriterioController::class, 'down'])->name('criterios.down')->middleware(['auth', 'verified']);
 
 Route::resource('avaliacoes', AvaliacaoController::class);
+Route::get('avaliacoes/{id}/{dimensao}/{indicador}', [AvaliacaoController::class, 'indicador'])->name('avaliacao.indicador')->middleware(['auth','verified']);
 
 Route::get('/evidencias/files', [EvidenciaController::class, 'files'])->name('evidencias.files')->middleware(['auth', 'verified']);
 Route::get('/evidencias/links/{size}', [EvidenciaController::class, 'links'])->name('evidencias.links')->middleware(['auth', 'verified']);
-Route::get('/evidencias/texts', [EvidenciaController::class, 'texts'])->name('evidencias.texts')->middleware(['auth', 'verified']);
+Route::get('/evidencias/texts/{size}', [EvidenciaController::class, 'texts'])->name('evidencias.texts')->middleware(['auth', 'verified']);
 Route::get('/evidencias/{id}/details', [EvidenciaController::class, 'details'])->name('evidencias.details')->middleware(['auth', 'verified']);
 
 Route::resource('evidencias', EvidenciaController::class);

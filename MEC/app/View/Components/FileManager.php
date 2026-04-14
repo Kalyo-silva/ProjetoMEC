@@ -8,16 +8,11 @@ use Illuminate\View\Component;
 
 class FileManager extends Component
 {
-    public $listaTexto;
-    public $listaLinks;
-
     /**
      * Create a new component instance.
      */
-    public function __construct($listaTexto, $listaLinks)
+    public function __construct()
     {
-        $this->listaTexto = $listaTexto;
-        $this->listaLinks = $listaLinks;
     }
 
     /**

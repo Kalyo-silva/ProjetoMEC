@@ -6,10 +6,12 @@ use App\Models\avaliacao;
 use App\Models\evidencia;
 use App\Models\instrumento;
 use App\Models\curso;
-use App\Models\User; // Se estiver usando o modelo padrão do Laravel
+use App\Models\User;
 use Illuminate\Http\Request;
 use Validator;
 use Illuminate\Support\Facades\Auth;
+
+use App\View\Components\avaliacao_current_indicador;
 
 class AvaliacaoController extends Controller
 {
@@ -30,12 +32,9 @@ class AvaliacaoController extends Controller
     public function show(int $id)
     {
         $avaliacao = avaliacao::findOrFail($id);
-
-        $listaTexto = evidencia::whereNotNull('texto')->orderBy('ano', 'desc')->paginate(10);
-        $listaLinks = evidencia::whereNotNull('link')->orderBy('ano', 'desc')->paginate(10);
-
+    
         if ($avaliacao) {
-            return view('avaliacoes.show', compact('avaliacao', 'listaTexto', 'listaLinks', ));
+            return view('avaliacoes.show', compact('avaliacao'));
         }
 
         return redirect()->route('avaliacoes.index')->with('error', 'Avaliação não encontrada...');
@@ -138,5 +137,23 @@ class AvaliacaoController extends Controller
         }
 
         return redirect()->route('avaliacoes.index')->with('error', 'Erro ao remover a avaliação');
+    }
+
+    public function indicador(int $id, int $dimensao, int $indicador){
+        
+        $avaliacao = avaliacao::findOrFail($id);
+
+        if ($avaliacao) {    
+            $obj = new avaliacao_current_indicador($avaliacao, $dimensao, $indicador);
+
+            $result = [
+                "maxDimension" => $avaliacao->instrumento->dimensoes->count(),
+                "maxIndicador" => $avaliacao->instrumento->dimensoes[$dimensao]->indicadores->count(),
+            ];
+            
+            return $obj->render()->with($obj->data());
+        }
+
+        return redirect()->back()->with('error', 'Erro ao encontrar avaliação');
     }
 }

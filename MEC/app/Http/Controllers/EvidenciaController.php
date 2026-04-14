@@ -16,15 +16,26 @@ class EvidenciaController extends Controller
 {
     public function files(){
         $listaArquivos = evidencia::whereNotNull('file_path')->where('tipo', 6)->orderBy('titulo', 'desc')->paginate(10);
+        $qtdArquivos = evidencia::whereNotNull('file_path')->where('tipo', 6)->count();
+
         $listaImagens = evidencia::whereNotNull('file_path')->where('tipo', 3)->orderBy('titulo', 'desc')->paginate(10);
+        $qtdImagens = evidencia::whereNotNull('file_path')->where('tipo', 3)->count();
+
         $listaAudios = evidencia::whereNotNull('file_path')->where('tipo', 4)->orderBy('titulo', 'desc')->paginate(10);
+        $qtdAudios = evidencia::whereNotNull('file_path')->where('tipo', 4)->count();
+
         $listaVideos = evidencia::whereNotNull('file_path')->where('tipo', 5)->orderBy('titulo', 'desc')->paginate(10);
+        $qtdVideos = evidencia::whereNotNull('file_path')->where('tipo', 5)->count();
 
         $arquivos = array(
             "arquivos" => $listaArquivos,
+            "qtdArquivos" => $qtdArquivos,
             "imagens" => $listaImagens,
+            "qtdImagens" => $qtdImagens,
             "audios" => $listaAudios,
-            "videos" => $listaVideos
+            "qtdAudios" => $qtdAudios,
+            "videos" => $listaVideos,
+            "qtdVideos" => $qtdVideos
         );
 
         $obj = new filemanager_files($arquivos);
@@ -42,10 +53,12 @@ class EvidenciaController extends Controller
         return $obj->render()->with($obj->data());
     }
 
-    public function Texts(){
-        $listaTextos = evidencia::whereNotNull('texto')->orderBy('ano', 'desc')->paginate(10);
+    public function Texts($size = 0){
+        $newSize = $size + 2;
 
-        $obj = new filemanager_texts($listaTextos);
+        $listaTextos = evidencia::whereNotNull('texto')->orderBy('ano', 'desc')->take($newSize)->get();
+
+        $obj = new filemanager_texts($listaTextos, evidencia::whereNotNull('texto')->count());
 
         return $obj->render()->with($obj->data());
     }
