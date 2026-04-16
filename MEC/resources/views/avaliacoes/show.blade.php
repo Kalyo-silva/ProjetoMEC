@@ -21,8 +21,9 @@
                     
                     </div>
                     
-                    <div class="flex flex-row-reverse px-4 py-2">
-                        <button>Proximo</button>
+                    <div class="flex flex-row-reverse gap-4 py-2">
+                        <button onclick="loadNext()" class="px-4 py-2 border rounded bg-indigo-400 text-white border-indigo-400">Proximo</button>
+                        <button onclick="loadPrevious()" class="px-4 py-2 border rounded border-indigo-400 text-indigo-400">Anterior</button>
                     </div>
                 </div>
             </div>
@@ -36,15 +37,47 @@
 
 <script>
     let avaliacao_id = {{ $avaliacao->id }}
+    let maxDimensao = {{ $avaliacao->instrumento->dimensoes->count() }}
+    let maxIndicador = [{{ $maxIndicador }}]
     let dimensao = 0
     let indicador = 0
 
-    function loadIndicador(dimensao, indicador){
+    function loadIndicador(){
         let container = document.getElementById('indicadorContainer'); 
         container.innerHTML = request('http://127.0.0.1:8000/avaliacoes/'+avaliacao_id+'/'+dimensao+'/'+indicador,'GET');
     }
 
     function loadNext(){
-        
+        if (indicador < maxIndicador[dimensao]-1){
+            indicador += 1;
+
+            loadIndicador()
+        }
+        else {
+            if (dimensao < maxDimensao-1){
+                dimensao += 1;
+                indicador = 0;
+
+                loadIndicador()
+            }
+        }
     }
+
+    function loadPrevious(){
+        if (indicador > 0){
+            indicador -= 1;
+
+            loadIndicador()
+        }
+        else {
+            if (dimensao > 0){
+                dimensao -= 1;
+                indicador = maxIndicador[dimensao]-1;
+
+                loadIndicador()
+            }
+        }
+    }
+
+    loadIndicador()
 </script>

@@ -34,7 +34,15 @@ class AvaliacaoController extends Controller
         $avaliacao = avaliacao::findOrFail($id);
     
         if ($avaliacao) {
-            return view('avaliacoes.show', compact('avaliacao'));
+            $maxIndicador = [];
+
+            foreach ($avaliacao->instrumento->dimensoes as $dimensao) {
+                array_push($maxIndicador, $dimensao->indicadores->count());
+            };
+    
+            $maxIndicador = implode(', ', $maxIndicador);
+
+            return view('avaliacoes.show', compact('avaliacao', 'maxIndicador'));
         }
 
         return redirect()->route('avaliacoes.index')->with('error', 'Avaliação não encontrada...');
@@ -145,11 +153,6 @@ class AvaliacaoController extends Controller
 
         if ($avaliacao) {    
             $obj = new avaliacao_current_indicador($avaliacao, $dimensao, $indicador);
-
-            $result = [
-                "maxDimension" => $avaliacao->instrumento->dimensoes->count(),
-                "maxIndicador" => $avaliacao->instrumento->dimensoes[$dimensao]->indicadores->count(),
-            ];
             
             return $obj->render()->with($obj->data());
         }
